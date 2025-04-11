@@ -1,0 +1,14 @@
+@use "../theme/appTheme";
+
+//default styling is for the single column
+.highlightsContainer{
+    height: 100%;
+    width: 100%;
+    // background-color: appTheme.$dark-100;
+}
+
+
+//for two columns
+@media (min-width: 330px) {
+    //for 2 row cards layout
+  }
