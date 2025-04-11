@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTheme } from "@/redux/reducers/appSlice";
 import { RootState } from "@/redux/store";
 
-const ThemeWrapper = ({ children }: any) => {
+interface ThemeWrapperProps {
+  children: ReactNode;
+}
+
+const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
   const [appTheme, setAppTheme] = useState("light");
 
   const theme = useSelector((state: RootState) => state.app.theme);
