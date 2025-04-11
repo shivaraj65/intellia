@@ -14,7 +14,7 @@ interface app {
 
 const initialState: app = {
   appInfo:{
-    name:"INTELLIA",
+    name:"Intellia",
     logo:"https://picsum.photos/150/50",
     description:"Where Opinions Meet Intelligence.",
   },

@@ -1,4 +1,4 @@
-.card-sim-wrapper {
+.cardsimwrapper {
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -6,22 +6,30 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin: 2rem 0;
+  padding: 2rem 0;
+  background-color: rgba(0, 0, 0, 0.785);
 }
 
-.w2-h1 {
+.w2h1 {
   width: 880px;
   height: 324px;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  .ant-card-body{    
+    height:100%;
+  }
 }
 
-.w1-h2 {
+.w1h2 {
   height: 664px;
   width: 432px;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
+  .ant-card-body{    
+    height:100%;
+    background-color: red !important;
+  }
 }
 
-.w1-h1 {
+.w1h1 {
   height: 324px;
   width: 432px;
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px !important;
