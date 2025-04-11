@@ -1,11 +1,11 @@
 import React from "react";
-import "../styles/wrapper/cardSimulator.scss";
+import "@/styles/wrapper/cardSimulator.module.scss";
 import { Card, Col, Row } from "antd";
 import HighlightScreen from '@/screens/highlightsScreen';
 
 const CardSimulator = () => {
   return (
-    <div className="card-sim-wrapper">
+    <div className={'card-sim-wrapper'}>
       <Card className="w2-h1" title="" variant="borderless">
           <HighlightScreen/>
       </Card>

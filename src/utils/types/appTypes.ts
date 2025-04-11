@@ -5,5 +5,5 @@ export interface appInfotypes{
 };
 
 export interface upProvider {
-    
+    accounts:string;
 }

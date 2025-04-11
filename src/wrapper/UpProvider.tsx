@@ -18,6 +18,7 @@ const UpProvider = () => {
       _contextAccounts: Array<`0x${string}`>
     ) => {
       setProfileConnected(_accounts.length > 0 && _contextAccounts.length > 0);
+      console.log(profileConnected);
     },
     []
   );
