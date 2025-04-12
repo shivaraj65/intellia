@@ -16,6 +16,7 @@ const initialState: app = {
     name: "Intellia",
     logo: "https://picsum.photos/150/50",
     description: "Where Opinions Meet Intelligence.",
+    url:"https://intellia-widgets.vercel.app/"
   },
   theme: "light",
 };

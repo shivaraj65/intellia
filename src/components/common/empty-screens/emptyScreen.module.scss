@@ -1,0 +1,146 @@
+.emptyscreen {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  .errorRow {
+    height: 100%;
+    padding: 0rem 0.2rem;
+    display: flex;
+    flex-direction: column;
+    .errorCol1 {
+      .imageContainer {
+        display: flex;
+        align-items: center;
+        padding-top: 2rem;
+        .image {
+          width: 90%;
+          height: auto;
+          margin: auto;
+        }
+      }
+    }
+    .errorCol2 {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .displayContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2rem;
+        .displayContentInfo {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+        }
+        .errorCard {
+          margin-top: 0.5rem;
+          width: 100%;
+          padding: 0.6rem 0.2rem !important;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+          text-align: center;
+          border-radius: 16px;
+
+          .displayContentText {
+            width: 100%;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 2rem;
+            overflow-wrap: break-word;
+            white-space: normal;
+            overflow-x: auto;
+            padding: 0;
+          }
+        }
+        .btnContainer {
+          height: 100%;
+          width: 100%;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          margin-top: 1.5rem;
+          .actionBtn {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 879px) {
+  // styles for 2-column layout
+  .emptyscreen {
+    .errorRow {
+      height: 100%;
+      flex-direction: row;
+      padding-top: 1rem;
+      .errorCol1 {
+        width: 50%;
+        .imageContainer {
+          padding-top: 0rem;
+          .image {
+            width: 75%;
+          }
+        }
+      }
+      .errorCol2 {
+        width: 50%;
+        .displayContent {
+          .displayContentInfo {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Desktop layout: (≥ 880px)
+@container (min-width: 880px) {
+  // styles for wider screens
+  .emptyscreen {
+    .errorRow {
+      height: 100%;
+      flex-direction: row;
+      padding-top: 1rem;
+      .errorCol1 {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .imageContainer {
+          width: 100%;
+          padding-top: 0rem;
+          .image {
+            width: 100%;
+          }
+        }
+      }
+      .errorCol2 {
+        width: 50%;
+        justify-content: center;
+        .displayContent {
+          width: 100%;
+          .displayContentInfo {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+          }
+          .btnContainer {
+            height: auto;
+            flex: unset;
+            display: block;
+            margin-top: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

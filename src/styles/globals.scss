@@ -14,7 +14,7 @@
   font-weight: 400;
   font-style: normal;
   background: linear-gradient(
-    90deg,
+    180deg,
     #d0bde6,
     /* $mix-light-100 */ #ae8fd8,
     /* $primary-500 */ #673ab7 /* $primary-100 */
@@ -25,13 +25,13 @@
 .font1 {
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 500;
+  // font-weight: 500;
   font-style: normal;
 }
 
 .font2 {
   font-family: "Lato", sans-serif;
-  font-weight: 400;
+  // font-weight: 400;
   font-style: normal;
 }
 
@@ -53,12 +53,12 @@
   }
 }
 
-//antd globals
+//------------------antd globals-----------------
 
 .ant-card {
   .ant-card-body {
     height: 100%;
-    width: 100%;
+    width: 100%;        
   }
 }
 
@@ -77,4 +77,12 @@
   .ant-drawer-mask{
       background-color: rgba(0, 0, 0, 0) !important;
   }        
+}
+
+.ant-divider{
+  margin: 1.3rem 0;
+  color: #d0bde6 !important;
+  .ant-divider-inner-text{
+    font-size: 1rem;
+  }
 }

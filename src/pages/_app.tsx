@@ -25,13 +25,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <UpProvider>
+      {/* <UpProvider> */}
         <ConfigProvider theme={theme}>
           <ThemeWrapper>
             <Component {...pageProps} />
           </ThemeWrapper>
         </ConfigProvider>
-      </UpProvider>
+      {/* </UpProvider> */}
     </Provider>
   );
 }

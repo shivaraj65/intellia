@@ -1,11 +1,48 @@
-.applayout{
-    overflow: hidden;    
-    position: relative;
-    height: 100%;
-    width: 100%;
-    .header{
-        display: flex;
-        align-items: center;
-        gap: 1rem;
+.applayout {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100% !important;
+  width: 100% !important;
+  flex: 1;
+  .container {
+    height: 100% !important;
+    width: 100% !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-left: 3rem;
     }
+    .body {
+      flex: 1;
+      width: 100%;
+      overflow-y: auto;
+      container-type: inline-size;
+      // height: 100%;
+    }
+  }
+}
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 880px) {
+  // styles for 2-column layout
+  .applayout {
+    width: 100%;
+    height: 100%;    
+  }
+}
+
+// Desktop layout: (≥ 880px)
+@container (min-width: 881px) {
+  // styles for wider screens
+  .applayout {
+    width: 100%;
+    height: 100vh;
+    padding: 2rem 1rem;
+  }
 }

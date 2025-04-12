@@ -2,12 +2,13 @@
 
 import React from "react";
 import HighlightScreen from '@/screens/highlightsScreen';
+import styles from "@/styles/pages/highlights.module.scss";
 
 const Highlights = () => {
     return(
-        <React.Fragment>
+        <div className={styles.highlightsApp}>
             <HighlightScreen />
-        </React.Fragment>
+        </div>
     )
 }
 
