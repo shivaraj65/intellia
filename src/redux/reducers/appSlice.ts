@@ -3,7 +3,7 @@
  * -> user infos
  */
 
-import { appInfotypes, upProvider } from "@/utils/types/appTypes";
+import { appInfotypes } from "@/utils/types/appTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface app {

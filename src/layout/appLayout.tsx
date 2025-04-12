@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import styles from "@/styles/layouts/appLayout.module.scss";
 import { Button, Drawer } from "antd";
 import { RootState } from "@/redux/store";

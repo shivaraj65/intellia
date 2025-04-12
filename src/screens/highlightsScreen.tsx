@@ -24,7 +24,7 @@ const HighlightScreen = () => {
         <p className="font2">test paragraph description</p>
         {
          accounts?.length > 0 && accounts.map((item)=>{
-            return <p>{item}</p>
+            return <p key={item}>{item}</p>
           })
         }        
       </AppLayout>

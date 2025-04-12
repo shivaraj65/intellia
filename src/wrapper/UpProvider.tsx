@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect } from "react";
 import { createClientUPProvider } from "@lukso/up-provider";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
