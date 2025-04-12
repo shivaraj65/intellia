@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
@@ -31,7 +33,5 @@ const HighlightScreen = () => {
     </div>
   );
 };
-
-
 
 export default React.memo(HighlightScreen);

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ReactNode, useCallback, useEffect } from "react";
 import { createClientUPProvider } from "@lukso/up-provider";
 import { AppDispatch, RootState } from "@/redux/store";
