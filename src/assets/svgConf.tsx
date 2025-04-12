@@ -2,10 +2,10 @@
 
 //--------general -------------
 // AI Icons
-import ChatBotAmico from "@/assets/svg/general/Chat bot-amico.svg";
-import ChatBotPana from "@/assets/svg/general/Chat bot-pana.svg";
-import ChatBotRafiki from "@/assets/svg/general/Chat bot-rafiki.svg";
-import DataExtractionBro from "@/assets/svg/general/Data extraction-bro.svg";
+import ChatBotAmico from "@/assets/svg/general/bots/Chat bot-amico.svg";
+import ChatBotPana from "@/assets/svg/general/bots/Chat bot-pana.svg";
+import ChatBotRafiki from "@/assets/svg/general/bots/Chat bot-rafiki.svg";
+import DataExtractionBro from "@/assets/svg/general/bots/Data extraction-bro.svg";
 // Success Icons
 import AppreciationBro from "@/assets/svg/general/Appreciation-bro.svg";
 import MailSentBro from "@/assets/svg/general/Mail sent-bro.svg";

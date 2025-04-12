@@ -30,7 +30,7 @@ const AppLayout = ({
 
   return (
     <div className={styles.applayout}>
-      <div>
+      <div className={styles.container}>
         <div className={styles.header}>
           <Button            
             icon={isDrawerOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}            

@@ -1,17 +1,100 @@
-@use "../theme/appTheme";
+@use "../theme/appTheme.scss";
 
-//default styling is for the single column
-.highlightsContainer{
-    height: 100%;
-    width: 100%;    
-    overflow-y: auto;
-    // background-color: appTheme.$dark-100;
+//default styling is for the single column - upto 432px
+.highlightsContainer {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column; 
+  container-type: inline-size;
 }
 
-
-//for two columns
-@media (min-width: 330px) {
-    //for 2 row cards layout    
-
-    
+.drawerContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  .subAppInfo {
+    padding: 0.3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .accentText {
+      letter-spacing: 0.1rem;
+    }
+    .description {
+      font-size: 0.75rem;
+      letter-spacing: 0.05rem;
+    }
   }
+  .metrics {
+    padding: 0.3rem;
+    .metric {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      .label {
+        font-weight: 400;
+        color: appTheme.$mix-dark-500 !important;
+      }
+      .value {
+        font-weight: 600;
+      }
+    }
+  }
+  .footer {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    a {
+      color: appTheme.$mix-dark-600;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: appTheme.$mix-dark-600;
+        text-decoration: underline;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4); 
+        border-radius: 4px;
+      }
+
+      &:active {
+        color: appTheme.$mix-dark-600;
+        transform: scale(0.98);
+      }
+
+      &:visited {
+        color: appTheme.$mix-dark-600;
+      }
+
+      &:disabled,
+      &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        color: #94a3b8; 
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container(min-width: 433px) and (max-width: 880px) {
+  // styles for 2-column layout  
+}
+
+// Desktop layout: (≥ 880px)
+@container(min-width: 881px) {
+  // styles for wider screens
+  .highlightsContainer{
+    max-width: 880px !important;
+    height: 100vh;
+    margin: auto;
+  }
+}
