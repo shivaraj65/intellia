@@ -1,15 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { createClientUPProvider } from "@lukso/up-provider";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAccounts,
+  setContextAccounts,
+  setProfileConnected,
+} from "@/redux/reducers/upProvideSlice";
 
 const provider = createClientUPProvider();
 
-const UpProvider = () => {
-  // Track connected accounts
-  const [accounts, setAccounts] = useState<Array<`0x${string}`>>([]);
-  const [contextAccounts, setContextAccounts] = useState<Array<`0x${string}`>>(
-    []
+interface PropTypes{
+  children: ReactNode
+}
+
+const UpProvider = ({children}:PropTypes) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { accounts, contextAccounts, profileConnected } = useSelector(
+    (state: RootState) => state.upProvider
   );
-  const [profileConnected, setProfileConnected] = useState(false);
 
   // Helper to check connection status
   const updateConnected = useCallback(
@@ -17,7 +27,9 @@ const UpProvider = () => {
       _accounts: Array<`0x${string}`>,
       _contextAccounts: Array<`0x${string}`>
     ) => {
-      setProfileConnected(_accounts.length > 0 && _contextAccounts.length > 0);
+      dispatch(
+        setProfileConnected(_accounts.length > 0 && _contextAccounts.length > 0)
+      );
       console.log(profileConnected);
     },
     []
@@ -27,7 +39,7 @@ const UpProvider = () => {
     async function init() {
       try {
         const _accounts = provider.accounts as Array<`0x${string}`>;
-        setAccounts(_accounts);
+        dispatch(setAccounts(_accounts));
 
         const _contextAccounts = provider.contextAccounts;
         updateConnected(_accounts, _contextAccounts);
@@ -38,12 +50,12 @@ const UpProvider = () => {
 
     // Handle account changes
     const accountsChanged = (_accounts: Array<`0x${string}`>) => {
-      setAccounts(_accounts);
+      dispatch(setAccounts(_accounts));
       updateConnected(_accounts, contextAccounts);
     };
 
     const contextAccountsChanged = (_accounts: Array<`0x${string}`>) => {
-      setContextAccounts(_accounts);
+      dispatch(setContextAccounts(_accounts));
       updateConnected(accounts, _accounts);
     };
 
@@ -60,9 +72,7 @@ const UpProvider = () => {
     };
   }, [accounts[0], contextAccounts[0], updateConnected]);
 
-  return <div>
-    up provider wrapper
-  </div>;
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default React.memo(UpProvider);

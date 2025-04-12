@@ -7,6 +7,7 @@ import theme from "@/styles/theme/themeConfig";
 import "@/styles/globals.scss";
 import "@/styles/theme/appTheme.scss";
 import "@/styles/theme/antdOverride.scss";
+import UpProvider from "@/wrapper/UpProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
   message.config({
@@ -17,11 +18,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <ConfigProvider theme={theme}>
-        <ThemeWrapper>
-          <Component {...pageProps} />
-        </ThemeWrapper>
-      </ConfigProvider>
+      <UpProvider>
+        <ConfigProvider theme={theme}>
+          <ThemeWrapper>
+            <Component {...pageProps} />
+          </ThemeWrapper>
+        </ConfigProvider>
+      </UpProvider>
     </Provider>
   );
 }
