@@ -6,7 +6,7 @@
 import React from "react";
 import styles from "./emptyScreen.module.scss";
 import Image from "next/image";
-import { Card, Col, Row, Button } from "antd";
+import { Button } from "antd";
 import { svgConf } from "@/assets/svgConf";
 
 interface props {

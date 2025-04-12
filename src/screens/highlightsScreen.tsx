@@ -11,7 +11,7 @@ import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 const HighlightScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  const accounts = useSelector((state: RootState) => state.upProvider.accounts);
+  // const accounts = useSelector((state: RootState) => state.upProvider.accounts);
   const appInfo = useSelector((state: RootState) => state.app.appInfo);
 
   const DrawerContents = (): React.ReactNode => {

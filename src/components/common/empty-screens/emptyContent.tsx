@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import styles from './emptyContent.module.scss';
+// import styles from './emptyContent.module.scss';
 
 const NoContent = () => {
   return <div className="">NoContent screen</div>;
