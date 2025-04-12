@@ -34,3 +34,47 @@
   font-weight: 400;
   font-style: normal;
 }
+
+//--------global components styles ------------
+* {
+  /* For Webkit browsers (Chrome, Edge, Safari) */
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15); /* Light grey/blackish */
+    border-radius: 10px;
+  }
+}
+
+//antd globals
+
+.ant-card {
+  .ant-card-body {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.ant-drawer{
+  .ant-drawer-content-wrapper{    
+    max-width: 300px !important;
+    .ant-drawer-content{
+      .ant-drawer-header{
+        padding: 0rem 0.6rem 0.4rem;
+      }
+      .ant-drawer-body{
+        padding: 0 0.4rem;
+      }
+    }
+  }
+  .ant-drawer-mask{
+      background-color: rgba(0, 0, 0, 0) !important;
+  }        
+}

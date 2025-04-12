@@ -1,11 +1,13 @@
+"use client";
+
 import React from "react";
 import HighlightScreen from '@/screens/highlightsScreen';
 
 const Highlights = () => {
     return(
-        <div>
+        <React.Fragment>
             <HighlightScreen />
-        </div>
+        </React.Fragment>
     )
 }
 

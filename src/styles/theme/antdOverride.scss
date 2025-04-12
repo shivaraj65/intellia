@@ -37,6 +37,9 @@
         color: appTheme.$primary-100 !important;
       }
     }
+    .ant-drawer{
+
+    }
   }
 
   [data-theme="dark"] {
@@ -74,6 +77,9 @@
       .ant-breadcrumb-separator {
         color: appTheme.$primary-100 !important;
       }
+    }
+    .ant-drawer{
+      
     }
   }
 }

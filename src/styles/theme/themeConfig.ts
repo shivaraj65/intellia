@@ -7,21 +7,21 @@
  const theme: ThemeConfig = {
    token: {
      fontSize: 15,
-     colorPrimary: "#096a2e",
+     colorPrimary: "#673ab7"
    },
    components: {
-     Menu: {
-       darkItemBg: "#090909",
-       itemBg: "#dee9df",
-       itemSelectedBg: "#f9f9f9",
-     },
-     Layout: {
-       siderBg: "#090909",
-       lightSiderBg: "#dee9df",
-     },
-     Input:{
-       activeBg:"#096a2e1f",
-     }
+    //  Menu: {
+    //    darkItemBg: "#090909",
+    //    itemBg: "#dee9df",
+    //    itemSelectedBg: "#f9f9f9",
+    //  },
+    //  Layout: {
+    //    siderBg: "#090909",
+    //    lightSiderBg: "#dee9df",
+    //  },
+    //  Input:{
+    //    activeBg:"#096a2e1f",
+    //  }
    },
  };
  
