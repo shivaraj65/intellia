@@ -1,9 +1,62 @@
+@use "../../../styles//theme/appTheme.scss";
+
 .creatHighlights{
     height: 100%;
     width: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
+    .createForm{        
+        width: 90%;
+        margin: auto;
+        padding-top: 1rem;
+        .createTitle{                
+            text-align: center;
+            color: appTheme.$light-600;
+            font-weight: 600;  
+            margin-bottom: 1rem;     
+        }
+        .label{
+            color: appTheme.$light-600;
+        }
+        .input{
+            margin-bottom: 1.3rem;
+        }
+        .iconContainer{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            overflow-x: auto !important;
+            margin-bottom: 1rem;
+            padding-bottom: 0.4rem;
+            .iconComp{
+                padding: 0.2rem;
+                display: inline-block;
+                margin: 0 0.2rem;   
+                border: 2px solid transparent;                         
+                img{
+                    height: 50px;        
+                    width: 50px;
+                }
+            }
+            .selectedIconComp{
+                border-radius: 10px;
+                border: 2px solid appTheme.$primary-600;
+                padding: 0.2rem;
+                margin: 0 0.2rem;   
+                display: inline-block;                                
+                img{
+                    height: 50px;        
+                    width: 50px;
+                }
+            }
+            
+        }
+        .submitBtn{
+            margin-bottom: 1rem;
+        }
+    }
+    
 }
 
 
@@ -11,7 +64,9 @@
 @container (min-width: 433px) and (max-width: 879px) {
     // styles for 2-column layout
     .creatHighlights{
-
+        .createForm{       
+            width: 60%;
+        }
     }
   }
   
@@ -19,6 +74,8 @@
   @container (min-width: 880px) {
     // styles for wider screens
     .creatHighlights{
-
+        .createForm{       
+            width: 60%;
+        }
     }
   }
