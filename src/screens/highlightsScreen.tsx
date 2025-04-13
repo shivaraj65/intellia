@@ -6,7 +6,9 @@ import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Divider } from "antd";
-import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
+// import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
+// import NoContent from "@/components/common/empty-screens/emptyContent";
+import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
 
 const HighlightScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -67,11 +69,27 @@ const HighlightScreen = () => {
         isDrawerOpen={isDrawerOpen}
         setIsDrawerOpen={setIsDrawerOpen}
         drawerComtent={<DrawerContents />}
-      >        
-        <EmptyScreen
+      >
+        {/* <EmptyScreen
           message={"Get started by creating a highlight."}
-          title={"No highlights"}          
-        />
+          title={"No highlights"}
+          buttonText={"Get Started"}
+          buttonAction={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        /> */}
+        {/* <NoContent
+          message={
+            "Be the first to add something special about them."
+          }          
+          title={"Make It Memorable"}
+          buttonText={"Got a Moment?"}
+          buttonAction={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        /> */}
+
+      <CreateHighlights/>
         {/* {accounts?.length > 0 &&
           accounts.map((item) => {
             return <p key={item}>{item}</p>;

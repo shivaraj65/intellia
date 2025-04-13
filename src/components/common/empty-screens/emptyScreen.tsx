@@ -12,9 +12,16 @@ import { svgConf } from "@/assets/svgConf";
 interface props {
   message: string;
   title: string;
+  buttonText: string;
+  buttonAction: () => void;
 }
 
-const EmptyScreen = ({ title = "", message = "" }: props) => {
+const EmptyScreen = ({
+  title = "",
+  message = "",
+  buttonText = "",
+  buttonAction,
+}: props) => {
   return (
     <div className={`${styles.emptyscreen} primaryText`}>
       <div className={styles.errorRow}>
@@ -40,8 +47,9 @@ const EmptyScreen = ({ title = "", message = "" }: props) => {
                 size="large"
                 block
                 shape="round"
+                onClick={buttonAction}
               >
-                Get Started
+                {buttonText}
               </Button>
             </div>
           </div>
