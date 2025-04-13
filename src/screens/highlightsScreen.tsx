@@ -6,8 +6,8 @@ import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Divider } from "antd";
-import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
-import NoContent from "@/components/common/empty-screens/emptyContent";
+// import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
+// import NoContent from "@/components/common/empty-screens/emptyContent";
 import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
 
 const HighlightScreen = () => {

@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import styles from "./createHighlights.module.scss";
 import { Input, Button, Modal } from "antd";
 import { App } from 'antd';
-import { imagesConf } from "@/assets/imagesConf";
+// import { imagesConf } from "@/assets/imagesConf";
 
 const CreateHighlights = () => {
-  const { message, notification } = App.useApp();
+  const { message } = App.useApp();
 
-  const [formDetails, setFormDetails] = useState<{
-    name: string;
-    descriptions: string;
-    icon: string;
-  }>({
-    name: "",
-    descriptions: "",
-    icon: "",
-  });
+  // const [formDetails, setFormDetails] = useState<{
+  //   name: string;
+  //   descriptions: string;
+  //   icon: string;
+  // }>({
+  //   name: "",
+  //   descriptions: "",
+  //   icon: "",
+  // });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
