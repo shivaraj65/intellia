@@ -13,6 +13,11 @@ interface createProps {
   icon: string;
 }
 
+interface addMessageProps {
+  highlightAddress: string;
+  messageText: string;
+}
+
 export const contractApi = {
   requestConnection: async () => {
     const provider = (window as any).lukso as any | undefined;
@@ -101,10 +106,39 @@ export const contractApi = {
       }
     }
   },
-  addMessageForHighlight: async () => {
+  addMessageForHighlight: async ({
+    highlightAddress,
+    messageText,
+  }: addMessageProps) => {
     try {
+      const { publicClient, walletClient } = await contractApi.setupClients();
+
+      const accounts = await contractApi.isWalletConnected();
+
+      if (!accounts) {
+        alert("Please connect to LUKSO Testnet to continue.");
+        return;
+      }
+      if (accounts.length === 0) {
+        alert("No user profiles found.");
+        return;
+      }
+      const testResults: any = await publicClient.simulateContract({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: "writeMessage",
+        account: accounts[0],
+        args: [highlightAddress, messageText],
+      });
+      console.log("testResults-----", testResults);
+      const result = await walletClient.writeContract({
+        ...testResults.request,
+        account: accounts[0],
+      });
+      return result;
     } catch (error: any) {
-      console.log("error", error);
+      console.log(error);
+      return "Something went wrong while trying to create highlights.";
     }
   },
   createYourHighlight: async ({ name, description, icon }: createProps) => {
