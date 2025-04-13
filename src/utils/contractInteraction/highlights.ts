@@ -5,7 +5,7 @@ import { createPublicClient, createWalletClient, custom, http } from "viem";
 import { luksoTestnet } from "viem/chains";
 import { contractAddress, contractABI } from "../abi/highlights";
 
-const luksoTestnetChainId = "0x1069";
+// const luksoTestnetChainId = "0x1069";
 
 interface createProps {
   name: string;
@@ -14,10 +14,36 @@ interface createProps {
 }
 
 export const contractApi = {
-  setupClients: async () => {
-    const provider = (window as any).ethereum;
+  requestConnection: async () => {
+    const provider = (window as any).lukso as any | undefined;
+
     if (!provider) {
-      throw new Error("Wallet not found");
+      alert("Please install the LUKSO Universal Profile browser extension.");
+      return null;
+    }
+
+    try {
+      const accounts: string[] = await provider.request({
+        method: "eth_requestAccounts",
+      });
+
+      console.log("Connected UP accounts:", accounts);
+      return accounts;
+    } catch (error) {
+      console.error("Error connecting to LUKSO UP Wallet:", error);
+      return null;
+    }
+  },
+  setupClients: async () => {
+    const provider = (window as any).lukso as any;
+
+    if (!provider) {
+      alert("Please install the LUKSO Universal Profile browser extension.");
+    }
+
+    // Check if we are using the UP provider
+    if (!provider.isUniversalProfileExtension) {
+      console.error("Not using a Universal Profile provider.");
     }
 
     const publicClient = createPublicClient({
@@ -25,57 +51,27 @@ export const contractApi = {
       transport: http("https://rpc.testnet.lukso.network"),
       //wss://ws-rpc.testnet.lukso.network
     });
-    console.log("public client", publicClient);
+
     const walletClient = createWalletClient({
       chain: luksoTestnet,
       transport: custom(provider),
     });
-    console.log("wallet client", walletClient);
+
     return { publicClient, walletClient };
   },
-  connectToLuksoTestnet: async () => {
+  isWalletConnected: async () => {
     try {
-      const currentChainId = await (window as any).ethereum.request({
-        method: "eth_chainId",
-      });
+      const provider = (window as any).lukso as any | undefined;
 
-      if (currentChainId !== luksoTestnetChainId) {
-        try {
-          await (window as any).ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: luksoTestnetChainId }],
-          });
-        } catch (err: any) {
-          if (err.code === 4902) {
-            // Chain not added to wallet, try adding it
-            await (window as any).ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [
-                {
-                  chainId: luksoTestnetChainId,
-                  chainName: "LUKSO Testnet",
-                  nativeCurrency: {
-                    name: "LYXt",
-                    symbol: "LYXt",
-                    decimals: 18,
-                  },
-                  rpcUrls: ["https://rpc.testnet.lukso.network"],
-                  blockExplorerUrls: [
-                    "https://explorer.execution.testnet.lukso.network",
-                  ],
-                },
-              ],
-            });
-          } else {
-            console.error("Chain switch failed:", err);
-            return false;
-          }
-        }
+      if (!provider) {
+        alert("Please install the LUKSO Universal Profile browser extension.");
+        return false;
       }
 
-      return true;
-    } catch (err) {
-      console.error("Failed to connect to LUKSO Testnet:", err);
+      const accounts = await provider.request({ method: "eth_accounts" });
+      return accounts;
+    } catch (error) {
+      console.error("Error checking wallet connection:", error);
       return false;
     }
   },
@@ -108,32 +104,37 @@ export const contractApi = {
   addMessageForHighlight: async () => {
     try {
     } catch (error: any) {
-        console.log('error',error);
+      console.log("error", error);
     }
   },
   createYourHighlight: async ({ name, description, icon }: createProps) => {
     try {
       const { publicClient, walletClient } = await contractApi.setupClients();
 
-      const connected = await contractApi.connectToLuksoTestnet();
+      const accounts = await contractApi.isWalletConnected();
 
-      if (!connected) {
+      if (!accounts) {
         alert("Please connect to LUKSO Testnet to continue.");
         return;
       }
-      const [account] = await (window as any).ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      console.log("accounts---", account);
+      if (accounts.length === 0) {
+        alert("No user profiles found.");
+        return;
+      }
+      console.log("accounts---", accounts);
+
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "createHighlight",
-        account,
+        account: accounts[0],
         args: [name, description, icon],
       });
       console.log("testResults-----", testResults);
-      const result = await walletClient.writeContract(testResults);
+      const result = await walletClient.writeContract({
+        ...testResults.request,
+        account: accounts[0],
+      });
       console.log("test result", result);
       return result;
     } catch (error: any) {
@@ -157,7 +158,7 @@ export const contractApi = {
         };
       }
     } catch (error: any) {
-        console.log('error',error);
+      console.log("error", error);
       return "Something went wrong while reading the highlight.";
     }
     return null;

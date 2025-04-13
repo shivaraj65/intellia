@@ -25,13 +25,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <UpProvider>
-      <ConfigProvider theme={theme}>
-        <AntdApp>
-          <ThemeWrapper>
-            <Component {...pageProps} />
-          </ThemeWrapper>
-        </AntdApp>
-      </ConfigProvider>
+        <ConfigProvider theme={theme}>
+          <AntdApp>
+            <ThemeWrapper>
+              <Component {...pageProps} />
+            </ThemeWrapper>
+          </AntdApp>
+        </ConfigProvider>
       </UpProvider>
     </Provider>
   );
