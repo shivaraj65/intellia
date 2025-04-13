@@ -1,0 +1,24 @@
+.creatHighlights{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 879px) {
+    // styles for 2-column layout
+    .creatHighlights{
+
+    }
+  }
+  
+  // Desktop layout: (≥ 880px)
+  @container (min-width: 880px) {
+    // styles for wider screens
+    .creatHighlights{
+
+    }
+  }

@@ -8,6 +8,7 @@ import { RootState } from "@/redux/store";
 import { Divider } from "antd";
 import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 import NoContent from "@/components/common/empty-screens/emptyContent";
+import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
 
 const HighlightScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -77,16 +78,18 @@ const HighlightScreen = () => {
             throw new Error("Function not implemented.");
           }}
         /> */}
-        <NoContent
+        {/* <NoContent
           message={
             "Be the first to add something special about them."
-          }
+          }          
           title={"Make It Memorable"}
           buttonText={"Got a Moment?"}
           buttonAction={function (): void {
             throw new Error("Function not implemented.");
           }}
-        />
+        /> */}
+
+      <CreateHighlights/>
         {/* {accounts?.length > 0 &&
           accounts.map((item) => {
             return <p key={item}>{item}</p>;

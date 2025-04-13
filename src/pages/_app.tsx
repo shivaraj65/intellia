@@ -2,7 +2,7 @@
 
 import ThemeWrapper from "@/wrapper/themeWrapper";
 import type { AppProps } from "next/app";
-import { ConfigProvider, message } from "antd";
+import { ConfigProvider, message, App as AntdApp } from "antd";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import theme from "@/styles/theme/themeConfig";
@@ -16,21 +16,22 @@ const UpProvider = dynamic(() => import("@/wrapper/UpProvider"), {
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  
   message.config({
     top: 20,
     duration: 2,
-    maxCount: 1,
+    maxCount: 2,
   });
 
   return (
     <Provider store={store}>
       <UpProvider>
-        <ConfigProvider theme={theme}>
+      <ConfigProvider theme={theme}>
+        <AntdApp>
           <ThemeWrapper>
             <Component {...pageProps} />
           </ThemeWrapper>
-        </ConfigProvider>
+        </AntdApp>
+      </ConfigProvider>
       </UpProvider>
     </Provider>
   );
