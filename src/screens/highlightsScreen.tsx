@@ -5,10 +5,12 @@ import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Divider } from "antd";
+import { Button, Divider } from "antd";
 // import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 // import NoContent from "@/components/common/empty-screens/emptyContent";
-import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
+// import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
+// import CarouselComp from "@/components/highlights/carousel/carousel";
+import { contractApi } from "@/utils/contractInteraction/highlights";
 
 const HighlightScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -63,6 +65,8 @@ const HighlightScreen = () => {
     );
   };
 
+  const [dummyDisplay, setDummyDisplay] = useState<any>(null);
+
   return (
     <div className={styles.highlightsContainer}>
       <AppLayout
@@ -89,7 +93,56 @@ const HighlightScreen = () => {
           }}
         /> */}
 
-      <CreateHighlights/>
+        {/* <CreateHighlights/> */}
+        <Button
+          onClick={async () => {
+            const data = await contractApi.getStats();
+            console.log("data from get stats", data);
+            setDummyDisplay(data);
+          }}
+        >
+          Get Status
+        </Button>
+        <Button
+          onClick={async () => {
+            const data = await contractApi.getHighlightsforUser('0xA3f4d6098fcF44CD9273B5323f43be13C45966b7');
+            console.log("data from get stats", data);
+            setDummyDisplay(data);
+            //if data is null then its empty...
+          }}
+        >
+          Get Highlights
+        </Button>
+        <Button
+          onClick={async () => {
+            const data = await contractApi.createYourHighlight({
+              name:'test101',
+              description:"test101",
+              icon:""
+            });
+            console.log("data from get stats", data);
+          }}
+        >
+          Create Highlights
+        </Button>
+        <Button
+          onClick={async () => {
+            const data = await contractApi.getStats();
+            console.log("data from get stats", data);
+          }}
+        >
+          Add Message
+        </Button>
+        {dummyDisplay &&
+          (typeof dummyDisplay === "string" ||
+          typeof dummyDisplay === "number" ? (
+            <p>{dummyDisplay}</p>
+          ) : (
+            <pre style={{ whiteSpace: "pre-wrap" }}>
+              {JSON.stringify(dummyDisplay, null, 2)}
+            </pre>
+          ))}
+        {/* <CarouselComp /> */}
         {/* {accounts?.length > 0 &&
           accounts.map((item) => {
             return <p key={item}>{item}</p>;

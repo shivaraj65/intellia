@@ -58,31 +58,90 @@
 .ant-card {
   .ant-card-body {
     height: 100%;
-    width: 100%;        
+    width: 100%;
   }
 }
 
-.ant-drawer{
-  .ant-drawer-content-wrapper{    
+.ant-drawer {
+  .ant-drawer-content-wrapper {
     max-width: 300px !important;
-    .ant-drawer-content{
-      .ant-drawer-header{
+    .ant-drawer-content {
+      .ant-drawer-header {
         padding: 0rem 0.6rem 0.4rem;
       }
-      .ant-drawer-body{
+      .ant-drawer-body {
         padding: 0 0.4rem;
       }
     }
   }
-  .ant-drawer-mask{
-      background-color: rgba(0, 0, 0, 0) !important;
-  }        
+  .ant-drawer-mask {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
 }
 
-.ant-divider{
+.ant-divider {
   margin: 1.3rem 0;
   color: #d0bde6 !important;
-  .ant-divider-inner-text{
+  .ant-divider-inner-text {
     font-size: 1rem;
+  }
+}
+
+.ant-carousel {
+  width: 100% !important;
+  height: 100% !important;
+  .slick-arrow {
+    color: black;
+    &:after {
+      color: black;
+    }
+  }
+  .slick-slider {
+    .slick-list {
+      height: 100% !important;
+      width: 100% !important;
+      .slick-track {
+        height: 100% !important;
+        width: 100% !important;
+        .slick-slide {
+          height: 100% !important;
+          width: 100% !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-content: center;
+          div {
+            height: 100% !important;
+            max-height: 100%;
+            width: 100% !important;
+            max-width: 100%;
+          }
+          .messageCard {
+            height: 100% !important;
+            min-height: 200px;
+            max-height: 100%;
+            width: 100% !important;
+            max-width: 100%;
+           
+            align-content: center;
+            overflow-y: auto;
+            .message {       
+              background-color: #e5daf1;
+              border-radius: 12px;                  
+              padding: 2rem 1.5rem;
+              white-space: normal;
+              overflow-wrap: break-word;
+              word-break: break-word;
+              max-width: 100%;
+              overflow: visible;
+              text-overflow: unset;
+              text-align: justify;
+              font-size: 1rem;
+              font-weight: 500;              
+            }
+          }
+        }
+      }
+    }
   }
 }
