@@ -157,7 +157,7 @@ const HighlightScreen = () => {
             </pre>
           ))}
 
-        {window.parent.location.href && <p>{window.parent.location.href}</p>}
+        {window?.parent?.location?.href && <p>{window?.parent?.location?.href}</p>}
         {/* <CarouselComp /> */}
         {/* {accounts?.length > 0 &&
           accounts.map((item) => {
