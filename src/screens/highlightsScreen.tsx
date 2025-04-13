@@ -97,7 +97,7 @@ const HighlightScreen = () => {
         <Button
           onClick={async () => {
             const data = await contractApi.requestConnection();
-            console.log("data from get stats", data);            
+            console.log("data from get stats", data);
           }}
         >
           connect
@@ -113,7 +113,9 @@ const HighlightScreen = () => {
         </Button>
         <Button
           onClick={async () => {
-            const data = await contractApi.getHighlightsforUser('0xA3f4d6098fcF44CD9273B5323f43be13C45966b7');
+            const data = await contractApi.getHighlightsforUser(
+              "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7"
+            );
             console.log("data from get stats", data);
             setDummyDisplay(data);
             //if data is null then its empty...
@@ -124,9 +126,9 @@ const HighlightScreen = () => {
         <Button
           onClick={async () => {
             const data = await contractApi.createYourHighlight({
-              name:'test101',
-              description:"test101",
-              icon:""
+              name: "test101",
+              description: "test101",
+              icon: "",
             });
             console.log("data from get stats", data);
           }}
@@ -135,8 +137,12 @@ const HighlightScreen = () => {
         </Button>
         <Button
           onClick={async () => {
-            const data = await contractApi.getStats();
-            console.log("data from get stats", data);
+            const data = await contractApi.addMessageForHighlight({
+              highlightAddress: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
+              messageText: " this is a test message",
+            });
+            console.log("data from create request", data);
+            setDummyDisplay(data);
           }}
         >
           Add Message
@@ -150,6 +156,8 @@ const HighlightScreen = () => {
               {JSON.stringify(dummyDisplay, null, 2)}
             </pre>
           ))}
+
+        {window.parent.location.href && <p>{window.parent.location.href}</p>}
         {/* <CarouselComp /> */}
         {/* {accounts?.length > 0 &&
           accounts.map((item) => {
