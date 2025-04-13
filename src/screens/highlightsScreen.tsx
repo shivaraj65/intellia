@@ -96,6 +96,14 @@ const HighlightScreen = () => {
         {/* <CreateHighlights/> */}
         <Button
           onClick={async () => {
+            const data = await contractApi.requestConnection();
+            console.log("data from get stats", data);            
+          }}
+        >
+          connect
+        </Button>
+        <Button
+          onClick={async () => {
             const data = await contractApi.getStats();
             console.log("data from get stats", data);
             setDummyDisplay(data);
