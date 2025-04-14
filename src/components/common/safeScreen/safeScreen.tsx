@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./safeScreen.module.scss";
 import Image from "next/image";
-import { Button } from "antd";
 import { svgConf } from "@/assets/svgConf";
 
 interface props {
