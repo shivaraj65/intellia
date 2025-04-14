@@ -3,25 +3,54 @@
  * when DApp is available and no content exists
  */
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "./emptyContent.module.scss";
 import Image from "next/image";
-import { Button } from "antd";
+import {
+  Button,
+  Divider,
+  FloatButton,
+  Input,
+  Modal,
+  message as antdMessage,
+} from "antd";
 import { svgConf } from "@/assets/svgConf";
+import { PlusOutlined } from "@ant-design/icons";
+
+const { TextArea } = Input;
 
 interface props {
   message: string;
   title: string;
   buttonText: string;
-  buttonAction: () => void;
+  blockchainFunctions: any;
 }
 
 const NoContent = ({
   title = "",
   message = "",
   buttonText = "",
-  buttonAction,
+  blockchainFunctions,
 }: props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [messages, setMessages] = useState("");
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setMessages("");
+    setIsModalOpen(false);
+  };
+
+  const updateMessage = (valye: string) => {
+    setMessages(valye);
+  };
   return (
     <div className={`${styles.emptyscreen} primaryText`}>
       <div className={styles.errorRow}>
@@ -47,14 +76,76 @@ const NoContent = ({
                 size="large"
                 block
                 shape="round"
-                onClick={buttonAction}
+                onClick={() => {
+                  showModal();
+                }}
               >
                 {buttonText}
               </Button>
             </div>
           </div>
         </div>
+        <FloatButton
+          icon={<PlusOutlined />}
+          tooltip={<div>Add Your Highlight</div>}
+          onClick={() => {
+            showModal();
+          }}
+        />
       </div>
+
+      <Modal
+        className={styles.addHighlightModal}
+        title="Create a Highlight"
+        style={{ top: 20 }}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <div className={styles.container}>
+          <span className={styles.label + " font2"}>Your Message :</span>
+          <TextArea
+            className={styles.inputCont}
+            rows={3}
+            showCount
+            maxLength={400}
+            value={messages}
+            onChange={(e: any) => {
+              updateMessage(e.target.value);
+            }}
+            placeholder="Your highlight goes here..."
+          />
+          <Divider />
+          <div className={styles.btnContainer}>
+            <Button
+              className={styles.submitBtn}
+              type="primary"
+              shape="round"
+              onClick={async () => {
+                if (messages.length > 0) {
+                  await blockchainFunctions.addMessage(messages);
+                } else {
+                  antdMessage.open({
+                    type: "warning",
+                    content: "Please Enter a message to continue",
+                  });
+                }
+              }}
+            >
+              Submit
+            </Button>
+            <Button
+              className={styles.submitBtn}
+              type="default"
+              shape="round"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

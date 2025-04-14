@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import styles from "./carousel.module.scss";
-import { Input, Button, Modal, Divider, Avatar, FloatButton } from "antd";
+import {
+  Input,
+  Button,
+  Modal,
+  Divider,
+  Avatar,
+  FloatButton,
+  message as antdMessage,
+} from "antd";
 import { Carousel } from "antd";
 // import { App } from "antd";
 // import { imagesConf } from "@/assets/imagesConf";
@@ -11,14 +19,12 @@ import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
-const sampleMessage = [
-  "I’ve used dozens of apps in this space, but Intellia stands out with its sleek UI and fast performance. The icon selection is surprisingly smooth — a small touch, but it shows attention to UX. I also like how intuitive the form validation is. Small things like that keep the flow uninterrupted. Would love to see more automation or keyboard shortcuts in future updates.",
-  "I don’t usually get excited about apps, but Intellia feels really modern and easy to use. I was able to set up my highlights super quickly without any confusion. The notifications help when I forget stuff, and the layout is clean. Definitely not overwhelming like some other apps I've tried!",
-  "As someone who handles a team, Intellia is surprisingly effective for keeping things structured. The form setup for highlights allows us to log key wins or updates weekly. It's minimal yet purposeful — and the icon selection makes entries visually identifiable, which is great when scanning through logs.",
-  "Visually, Intellia has great potential. The card-based layout for selecting icons and the way highlights are presented feels polished and aesthetic. I’d love to see more customization in color themes or icon packs to match different brand vibes. But overall, it’s slick and satisfying to use.",
-];
+interface props {
+  HighlightData: any;
+  blockchainFunctions: any;
+}
 
-const CarouselComp = () => {
+const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -52,21 +58,22 @@ const CarouselComp = () => {
           effect={"scrollx"}
           waitForAnimate={true}
         >
-          {sampleMessage.map((message, index) => {
-            return (
-              <div className="messageCard" key={index + message}>
-                <section className="message font2">
-                  {message}
-                  <Divider />
-                  <Avatar
-                    style={{ backgroundColor: "#8c64c8" }}
-                    icon={<UserOutlined />}
-                  />
-                  <span className="title">&nbsp; Anonymous User</span>
-                </section>
-              </div>
-            );
-          })}
+          {HighlightData &&
+            HighlightData?.messages.map((message: any, index: number) => {
+              return (
+                <div className="messageCard" key={index + message}>
+                  <section className="message font2">
+                    {message}
+                    <Divider />
+                    <Avatar
+                      style={{ backgroundColor: "#8c64c8" }}
+                      icon={<UserOutlined />}
+                    />
+                    <span className="title">&nbsp; Anonymous User</span>
+                  </section>
+                </div>
+              );
+            })}
         </Carousel>
         <FloatButton
           icon={<PlusOutlined />}
@@ -105,7 +112,16 @@ const CarouselComp = () => {
               className={styles.submitBtn}
               type="primary"
               shape="round"
-              onClick={() => {}}
+              onClick={async () => {
+                if (message.length > 0) {
+                  await blockchainFunctions.addMessage(message);
+                } else {
+                  antdMessage.open({
+                    type: "warning",
+                    content: "Please Enter a message to continue",
+                  });
+                }
+              }}
             >
               Submit
             </Button>
