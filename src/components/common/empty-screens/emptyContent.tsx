@@ -87,6 +87,7 @@ const NoContent = ({
         </div>
         <FloatButton
           icon={<PlusOutlined />}
+          style={{bottom:12,right:12}}
           tooltip={<div>Add Your Highlight</div>}
           onClick={() => {
             showModal();

@@ -5,6 +5,7 @@ import HighlightScreen from "@/screens/highlightsScreen";
 import styles from "@/styles/pages/highlights.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import SafeScreen from "@/components/common/safeScreen/safeScreen";
 
 const Highlights = () => {
   const accounts = useSelector((state: RootState) => state.upProvider.accounts);
@@ -20,7 +21,10 @@ const Highlights = () => {
       contextAccounts.length > 0 ? (
         <HighlightScreen />
       ) : (
-        <>connect wallet</>
+        <SafeScreen
+          message={"Hang tight while we establish a secure wallet connection."}
+          title={"Setting Things Up"}
+        />        
       )}
     </div>
   );

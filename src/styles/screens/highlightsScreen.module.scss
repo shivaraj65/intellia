@@ -2,8 +2,8 @@
 
 //default styling is for the single column - upto 432px
 .highlightsContainer {
-  height: 100%;
-  width: 100%;
+  height: 100vh !important;
+  width: 100% !important;
   overflow-y: auto;
   display: flex;
   flex-direction: column; 

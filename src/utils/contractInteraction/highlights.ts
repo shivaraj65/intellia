@@ -12,13 +12,13 @@ interface createProps {
   name: string;
   description: string;
   icon: string;
-  accounts:any[];
+  accounts: any[];
 }
 
 interface addMessageProps {
   highlightAddress: string;
   messageText: string;
-  accounts:any[];
+  accounts: any[];
 }
 
 export const contractApi = {
@@ -96,6 +96,15 @@ export const contractApi = {
         args: [address],
       });
       console.log("results", result);
+      if (result && Array.isArray(result)) {
+        const [x, y, z, a] = result as [string, string, string, any[]];
+        return {
+          name: x,
+          description: y,
+          icon: z,
+          messages: a,
+        };
+      }
       return result;
     } catch (error: any) {
       console.log("Contract call failed:", error.message);
@@ -115,7 +124,7 @@ export const contractApi = {
   addMessageForHighlight: async ({
     highlightAddress,
     messageText,
-    accounts
+    accounts,
   }: addMessageProps) => {
     try {
       const { publicClient, walletClient } = await contractApi.setupClients();
@@ -148,7 +157,12 @@ export const contractApi = {
       return "Something went wrong while trying to create highlights.";
     }
   },
-  createYourHighlight: async ({ name, description, icon,accounts }: createProps) => {
+  createYourHighlight: async ({
+    name,
+    description,
+    icon,
+    accounts,
+  }: createProps) => {
     try {
       const { publicClient, walletClient } = await contractApi.setupClients();
 
@@ -205,4 +219,3 @@ export const contractApi = {
     return null;
   },
 };
-
