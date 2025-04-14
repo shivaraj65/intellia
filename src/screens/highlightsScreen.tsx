@@ -15,7 +15,10 @@ import { contractApi } from "@/utils/contractInteraction/highlights";
 const HighlightScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
-  // const accounts = useSelector((state: RootState) => state.upProvider.accounts);
+  const accounts = useSelector((state: RootState) => state.upProvider.accounts);
+  const contextAccounts = useSelector(
+    (state: RootState) => state.upProvider.contextAccounts
+  );
   const appInfo = useSelector((state: RootState) => state.app.appInfo);
 
   const DrawerContents = (): React.ReactNode => {
@@ -157,9 +160,8 @@ const HighlightScreen = () => {
             </pre>
           ))}
 
-        <p>
-          {window?.parent?.location?.href ? window?.parent?.location?.href : ""}
-        </p>
+        {accounts && <p>{accounts}</p>}
+        {contextAccounts && <p>{contextAccounts}</p>}
 
         {/* <CarouselComp /> */}
         {/* {accounts?.length > 0 &&
