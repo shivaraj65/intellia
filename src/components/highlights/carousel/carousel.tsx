@@ -54,21 +54,31 @@ const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
           dotPosition={"left"}
           infinite={true}
           autoplay={{ dotDuration: true }}
-          autoplaySpeed={5000}
+          autoplaySpeed={10000}
           effect={"scrollx"}
           waitForAnimate={true}
         >
           {HighlightData &&
-            HighlightData?.messages.map((message: any, index: number) => {
+            HighlightData?.messages?.map((message: any, index: number) => {
               return (
                 <div className="messageCard" key={index + message}>
+                  <header className={styles.questionComp}>
+                    {HighlightData && HighlightData.name && (
+                      <h3 className="font2">{HighlightData.name}</h3>
+                    )}
+                    {/* {HighlightData && HighlightData.description && (
+                      <p className="font2">{HighlightData.description}</p>
+                    )} */}
+                  </header>
+
                   <section className="message font2">
-                    {message}
+                    {message?.text}
                     <Divider />
                     <Avatar
                       style={{ backgroundColor: "#8c64c8" }}
                       icon={<UserOutlined />}
                     />
+                    {/* //sender */}
                     <span className="title">&nbsp; Anonymous User</span>
                   </section>
                 </div>
@@ -77,6 +87,7 @@ const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
         </Carousel>
         <FloatButton
           icon={<PlusOutlined />}
+          style={{ bottom: 12, right: 12 }}
           tooltip={<div>Add Your Highlight</div>}
           onClick={() => {
             showModal();
@@ -94,6 +105,15 @@ const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
         footer={null}
       >
         <div className={styles.container}>
+          <header className={styles.questionComp}>
+            {HighlightData && HighlightData.name && (
+              <h3 className="font2">{HighlightData.name}</h3>
+            )}
+            {HighlightData && HighlightData.description && (
+              <p className="font2">{HighlightData.description}</p>
+            )}
+          </header>
+          {/* <Divider /> */}
           <span className={styles.label + " font2"}>Your Message :</span>
           <TextArea
             className={styles.inputCont}

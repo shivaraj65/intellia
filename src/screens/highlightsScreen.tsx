@@ -5,7 +5,7 @@ import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import {  Divider, message } from "antd";
+import { Divider, message } from "antd";
 import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 import NoContent from "@/components/common/empty-screens/emptyContent";
 import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
@@ -93,7 +93,7 @@ const HighlightScreen = () => {
     },
     checkTransactionCompleted: async (txnId: string) => {
       //validate the txn and return the result...
-      console.log(txnId)
+      console.log(txnId);
     },
   };
 
@@ -158,20 +158,18 @@ const HighlightScreen = () => {
         setIsDrawerOpen={setIsDrawerOpen}
         drawerComtent={<DrawerContents />}
       >
-        {
-          contextAccounts && <p>{contextAccounts[0]}</p>
-        }
-        {
-          accounts && <p>{accounts[0]}</p>
-        }
+        {/* {contextAccounts && <p>{contextAccounts[0]}</p>}
+        {accounts && <p>{accounts[0]}</p>} */}
         {contextAccounts[0] === accounts[0] ? (
           // admin route
           <React.Fragment>
             {HighlightData ? (
-              <CarouselComp
-                HighlightData={HighlightData}
-                blockchainFunctions={blockchainFunctions}
-              />
+              <React.Fragment>
+                <CarouselComp
+                  HighlightData={HighlightData}
+                  blockchainFunctions={blockchainFunctions}
+                />
+              </React.Fragment>
             ) : currentAdminScreen === 0 ? (
               <EmptyScreen
                 message={"Get started by creating a highlight."}

@@ -12,24 +12,37 @@
     margin: auto;
     .customCarousel {
       height: 100%;
-      width: 100%;    
+      width: 100%;      
       span{
         letter-spacing: 0.08rem;
-      }       
+      }
+      .questionComp{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;        
+      }  
     }
   }
 }
 .addHighlightModal{    
     .container{
         padding: 1rem 0.5rem;
+        .questionComp{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;  
+          padding-bottom: 0.5rem;      
+        }  
         .inputCont{
             margin-top: 0.3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1rem;            
         }
         .btnContainer{
             display: flex;
             justify-content: flex-end;
-            gap: 1rem;
+            gap: 1rem;            
             button{
                 font-weight: 600;
                 padding-left: 2rem !important;
