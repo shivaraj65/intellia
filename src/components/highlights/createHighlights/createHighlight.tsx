@@ -7,7 +7,11 @@ import { App } from "antd";
 import { imagesConf } from "@/assets/imagesConf";
 import Image from "next/image";
 
-const CreateHighlights = () => {
+interface props {
+  blockchainFunctions: any;
+}
+
+const CreateHighlights = ({ blockchainFunctions }: props) => {
   const { message } = App.useApp();
 
   const [formDetails, setFormDetails] = useState<{
@@ -132,8 +136,16 @@ const CreateHighlights = () => {
           className={styles.submitBtn}
           type="primary"
           shape="round"
-          onClick={() => {
-            validateFormDetails(formDetails, false);
+          onClick={async () => {
+            await validateFormDetails(formDetails, false);
+            const isvalid = await validateFormDetails(formDetails, true);
+            if (isvalid) {
+              blockchainFunctions.createHighlights(
+                formDetails.name,
+                formDetails.description,
+                formDetails.icon
+              );
+            }
           }}
           block
         >

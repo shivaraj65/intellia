@@ -1,25 +1,101 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Button, Divider } from "antd";
-// import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
-// import NoContent from "@/components/common/empty-screens/emptyContent";
-// import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
-// import CarouselComp from "@/components/highlights/carousel/carousel";
+import {  Divider, message } from "antd";
+import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
+import NoContent from "@/components/common/empty-screens/emptyContent";
+import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
+import CarouselComp from "@/components/highlights/carousel/carousel";
 import { contractApi } from "@/utils/contractInteraction/highlights";
 
 const HighlightScreen = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
   const accounts = useSelector((state: RootState) => state.upProvider.accounts);
   const contextAccounts = useSelector(
     (state: RootState) => state.upProvider.contextAccounts
   );
   const appInfo = useSelector((state: RootState) => state.app.appInfo);
+
+  //applayout states...
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+  //0 - empty screen / 1- create page /
+  const [currentAdminScreen, setCurrentAdminScreen] = useState<number>(0);
+
+  //children states...
+  const [appStats, setappStats] = useState<any>(null);
+  const [HighlightData, setHighlightData] = useState<any>(null);
+
+  useEffect(() => {
+    blockchainFunctions.getStats();
+  }, [accounts, contextAccounts]);
+
+  useEffect(() => {
+    if (contextAccounts && contextAccounts.length > 0) {
+      blockchainFunctions.getHighlights();
+    }
+  }, [contextAccounts]);
+
+  const blockchainFunctions = {
+    requestConnect: async () => {
+      const data = await contractApi.requestConnection();
+      console.log("data from get stats", data);
+    },
+    getStats: async () => {
+      const data = await contractApi.getStats();
+      console.log("stats data---", data);
+      if (typeof data === "string") {
+        message.open({
+          type: "warning",
+          content: data,
+        });
+      } else {
+        setappStats(data);
+      }
+    },
+    getHighlights: async () => {
+      const data = await contractApi.getHighlightsforUser(contextAccounts[0]);
+      console.log("highlights data---", data);
+      if (typeof data === "string") {
+        message.open({
+          type: "warning",
+          content: data,
+        });
+      } else {
+        setHighlightData(data);
+      }
+    },
+    createHighlights: async (
+      name: string,
+      description: string,
+      icon: string
+    ) => {
+      const data = await contractApi.createYourHighlight({
+        name: name,
+        description: description,
+        icon: icon,
+        accounts: accounts,
+      });
+      console.log("data from get stats", data);
+    },
+    addMessage: async (message: string) => {
+      const data = await contractApi.addMessageForHighlight({
+        highlightAddress: contextAccounts[0],
+        messageText: message,
+        accounts: accounts,
+      });
+      console.log("data from create request", data);
+
+      //we will receive a txn id. try to capture the id and make a iterative call no next function to get tit updated..
+    },
+    checkTransactionCompleted: async (txnId: string) => {
+      //validate the txn and return the result...
+      console.log(txnId)
+    },
+  };
 
   const DrawerContents = (): React.ReactNode => {
     return (
@@ -32,16 +108,21 @@ const HighlightScreen = () => {
         </div>
         <Divider orientation="right">App Metrics</Divider>
         <div className={styles.metrics}>
-          <div className={styles.metric}>
-            <span
-              className={
-                styles.label + " " + styles["secondaryText"] + " font1"
-              }
-            >
-              👤 Total Users
-            </span>
-            <span className={styles.value + " font2"}>{123}</span>
-          </div>
+          {appStats && (
+            <div className={styles.metric}>
+              <span
+                className={
+                  styles.label + " " + styles["secondaryText"] + " font1"
+                }
+              >
+                👤 Total Users
+              </span>
+              <span className={styles.value + " font2"}>
+                {appStats?.totalUsers}
+              </span>
+            </div>
+          )}
+
           <div className={styles.metric}>
             <span
               className={
@@ -50,7 +131,9 @@ const HighlightScreen = () => {
             >
               💬 Total Messages
             </span>
-            <span className={styles.value + " font2"}>{12}</span>
+            <span className={styles.value + " font2"}>
+              {appStats?.totalMessages}
+            </span>
           </div>
         </div>
         <Divider />
@@ -68,8 +151,6 @@ const HighlightScreen = () => {
     );
   };
 
-  const [dummyDisplay, setDummyDisplay] = useState<any>(null);
-
   return (
     <div className={styles.highlightsContainer}>
       <AppLayout
@@ -77,97 +158,47 @@ const HighlightScreen = () => {
         setIsDrawerOpen={setIsDrawerOpen}
         drawerComtent={<DrawerContents />}
       >
-        {/* <EmptyScreen
-          message={"Get started by creating a highlight."}
-          title={"No highlights"}
-          buttonText={"Get Started"}
-          buttonAction={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        /> */}
-        {/* <NoContent
-          message={
-            "Be the first to add something special about them."
-          }          
-          title={"Make It Memorable"}
-          buttonText={"Got a Moment?"}
-          buttonAction={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        /> */}
-
-        {/* <CreateHighlights/> */}
-        <Button
-          onClick={async () => {
-            const data = await contractApi.requestConnection();
-            console.log("data from get stats", data);
-          }}
-        >
-          connect
-        </Button>
-        <Button
-          onClick={async () => {
-            const data = await contractApi.getStats();
-            console.log("data from get stats", data);
-            setDummyDisplay(data);
-          }}
-        >
-          Get Status
-        </Button>
-        <Button
-          onClick={async () => {
-            const data = await contractApi.getHighlightsforUser(
-              "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7"
-            );
-            console.log("data from get stats", data);
-            setDummyDisplay(data);
-            //if data is null then its empty...
-          }}
-        >
-          Get Highlights
-        </Button>
-        <Button
-          onClick={async () => {
-            const data = await contractApi.createYourHighlight({
-              name: "test101",
-              description: "test101",
-              icon: "",
-            });
-            console.log("data from get stats", data);
-          }}
-        >
-          Create Highlights
-        </Button>
-        <Button
-          onClick={async () => {
-            const data = await contractApi.addMessageForHighlight({
-              highlightAddress: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
-              messageText: " this is a test message",
-            });
-            console.log("data from create request", data);
-            setDummyDisplay(data);
-          }}
-        >
-          Add Message
-        </Button>
-        {dummyDisplay &&
-          (typeof dummyDisplay === "string" ||
-          typeof dummyDisplay === "number" ? (
-            <p>{dummyDisplay}</p>
-          ) : (
-            <pre style={{ whiteSpace: "pre-wrap" }}>
-              {JSON.stringify(dummyDisplay, null, 2)}
-            </pre>
-          ))}
-
-        {accounts && <p>{accounts}</p>}
-        {contextAccounts && <p>{contextAccounts}</p>}
-
-        {/* <CarouselComp /> */}
-        {/* {accounts?.length > 0 &&
-          accounts.map((item) => {
-            return <p key={item}>{item}</p>;
-          })} */}
+        {contextAccounts[0] === accounts[0] ? (
+          // admin route
+          <React.Fragment>
+            {HighlightData ? (
+              <CarouselComp
+                HighlightData={HighlightData}
+                blockchainFunctions={blockchainFunctions}
+              />
+            ) : currentAdminScreen === 0 ? (
+              <EmptyScreen
+                message={"Get started by creating a highlight."}
+                title={"No highlights"}
+                buttonText={"Get Started"}
+                buttonAction={() => {
+                  setCurrentAdminScreen(1);
+                }}
+              />
+            ) : currentAdminScreen === 1 ? (
+              <CreateHighlights blockchainFunctions={blockchainFunctions} />
+            ) : (
+              <></>
+            )}
+          </React.Fragment>
+        ) : (
+          // users route
+          <React.Fragment>
+            {HighlightData && HighlightData?.messages.length > 0 ? (
+              <CarouselComp
+                HighlightData={HighlightData}
+                blockchainFunctions={blockchainFunctions}
+              />
+            ) : (
+              <NoContent
+                message={"Be the first to add something special about them."}
+                title={"Make It Memorable"}
+                buttonText={"Got a Moment?"}
+                blockchainFunctions={blockchainFunctions}
+              />
+            )}
+          </React.Fragment>
+        )}
       </AppLayout>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 // lib/viemClient.ts
+import { createClientUPProvider } from "@lukso/up-provider";
 import { createPublicClient, createWalletClient, custom, http } from "viem";
 import { luksoTestnet } from "viem/chains";
 import { contractAddress, contractABI } from "../abi/highlights";
@@ -11,11 +12,13 @@ interface createProps {
   name: string;
   description: string;
   icon: string;
+  accounts:any[];
 }
 
 interface addMessageProps {
   highlightAddress: string;
   messageText: string;
+  accounts:any[];
 }
 
 export const contractApi = {
@@ -40,16 +43,19 @@ export const contractApi = {
     }
   },
   setupClients: async () => {
-    const provider = (window as any).lukso as any;
+    // const provider = (window as any).lukso as any;
+
+    // Construct the up-provider
+    const provider = createClientUPProvider();
 
     if (!provider) {
       alert("Please install the LUKSO Universal Profile browser extension.");
     }
 
     // Check if we are using the UP provider
-    if (!provider.isUniversalProfileExtension) {
-      console.error("Not using a Universal Profile provider.");
-    }
+    // if (!provider.isUniversalProfileExtension) {
+    //   console.error("Not using a Universal Profile provider.");
+    // }
 
     const publicClient = createPublicClient({
       chain: luksoTestnet,
@@ -109,20 +115,21 @@ export const contractApi = {
   addMessageForHighlight: async ({
     highlightAddress,
     messageText,
+    accounts
   }: addMessageProps) => {
     try {
       const { publicClient, walletClient } = await contractApi.setupClients();
 
-      const accounts = await contractApi.isWalletConnected();
+      // const accounts = await contractApi.isWalletConnected();
 
-      if (!accounts) {
-        alert("Please connect to LUKSO Testnet to continue.");
-        return;
-      }
-      if (accounts.length === 0) {
-        alert("No user profiles found.");
-        return;
-      }
+      // if (!accounts) {
+      //   alert("Please connect to LUKSO Testnet to continue.");
+      //   return;
+      // }
+      // if (accounts.length === 0) {
+      //   alert("No user profiles found.");
+      //   return;
+      // }
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,
@@ -141,21 +148,21 @@ export const contractApi = {
       return "Something went wrong while trying to create highlights.";
     }
   },
-  createYourHighlight: async ({ name, description, icon }: createProps) => {
+  createYourHighlight: async ({ name, description, icon,accounts }: createProps) => {
     try {
       const { publicClient, walletClient } = await contractApi.setupClients();
 
-      const accounts = await contractApi.isWalletConnected();
+      // const accounts = await contractApi.isWalletConnected();
 
-      if (!accounts) {
-        alert("Please connect to LUKSO Testnet to continue.");
-        return;
-      }
-      if (accounts.length === 0) {
-        alert("No user profiles found.");
-        return;
-      }
-      console.log("accounts---", accounts);
+      // if (!accounts) {
+      //   alert("Please connect to LUKSO Testnet to continue.");
+      //   return;
+      // }
+      // if (accounts.length === 0) {
+      //   alert("No user profiles found.");
+      //   return;
+      // }
+      // console.log("accounts---", accounts);
 
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
@@ -199,8 +206,3 @@ export const contractApi = {
   },
 };
 
-// Simulate a flow
-// contractApi.getHighlightsforUser("0xabc...");
-// contractApi.getStats();
-// contractApi.createYourHighlight("Name", "Desc", "🔥", "0xabc...", ["0x123...", "0x456..."]);
-// contractApi.addMessageForHighlight("0xdef...", "Hey there!", "0xabc...");
