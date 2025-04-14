@@ -158,6 +158,12 @@ const HighlightScreen = () => {
         setIsDrawerOpen={setIsDrawerOpen}
         drawerComtent={<DrawerContents />}
       >
+        {
+          contextAccounts && <p>{contextAccounts[0]}</p>
+        }
+        {
+          accounts && <p>{accounts[0]}</p>
+        }
         {contextAccounts[0] === accounts[0] ? (
           // admin route
           <React.Fragment>

@@ -1,15 +1,29 @@
 "use client";
 
 import React from "react";
-import HighlightScreen from '@/screens/highlightsScreen';
+import HighlightScreen from "@/screens/highlightsScreen";
 import styles from "@/styles/pages/highlights.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Highlights = () => {
-    return(
-        <div className={styles.highlightsApp}>
-            <HighlightScreen />
-        </div>
-    )
-}
+  const accounts = useSelector((state: RootState) => state.upProvider.accounts);
+  const contextAccounts = useSelector(
+    (state: RootState) => state.upProvider.contextAccounts
+  );
+
+  return (
+    <div className={styles.highlightsApp}>
+      {accounts &&
+      accounts.length > 0 &&
+      contextAccounts &&
+      contextAccounts.length > 0 ? (
+        <HighlightScreen />
+      ) : (
+        <>connect wallet</>
+      )}
+    </div>
+  );
+};
 
 export default React.memo(Highlights);
