@@ -12,7 +12,7 @@ import "@/styles/theme/appTheme.scss";
 import "@/styles/theme/antdOverride.scss";
 import "@/components/common/gooey-nav/GooeyNav.css";
 import "@/components/common/rotating-text/RotatingText.css";
-import "@/components/common/scroll-velocity/Scrollvelocity.css";
+import "@/components/common/scroll-velocity/ScrollVelocity.css";
 import "@/components/common/tilted-card/TiltedCard.css";
 import "@/components/common/gooey-nav/GooeyNav.css";
 import dynamic from "next/dynamic";
