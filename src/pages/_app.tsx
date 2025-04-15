@@ -7,8 +7,14 @@ import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 import theme from "@/styles/theme/themeConfig";
 import "@/styles/globals.scss";
+import "@/styles/landingpage.scss";
 import "@/styles/theme/appTheme.scss";
 import "@/styles/theme/antdOverride.scss";
+import "@/components/common/gooey-nav/GooeyNav.css";
+import "@/components/common/rotating-text/RotatingText.css";
+import "@/components/common/scroll-velocity/ScrollVelocity.css";
+import "@/components/common/tilted-card/TiltedCard.css";
+import "@/components/common/gooey-nav/GooeyNav.css";
 import dynamic from "next/dynamic";
 
 const UpProvider = dynamic(() => import("@/wrapper/UpProvider"), {
