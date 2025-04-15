@@ -1,0 +1,487 @@
+.landing-page {
+  width: 100%;
+  .title-container {
+    height: 100dvh;
+    width: 100vw;
+    background-image: url("../assets/images/general/landing1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .content-div {
+      height: 60%;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      // align-items: flex-start;
+      align-items: center;
+      .title {
+        font-size: 4rem;
+        font-weight: 500;
+        text-shadow: 0px 0px 0px #ffffff, 0 0 4rem #000000, 0 0 0.1rem #000000;
+        margin-bottom: 2.5rem;
+        background: unset;
+        // color: #fff !important;
+      }
+      .description {
+        color: white !important;
+        font-size: 1.6rem;
+        // width: 100%;
+        margin: auto;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        .muted {
+          color: #b4b4b4;
+        }
+        .rotating-text-mainclass {
+          // padding: 0.1rem 1rem;
+          display: inline;
+          // background-color: #5959592d;
+          color: white;
+          overflow: hidden;
+          border-radius: 12px;
+          font-weight: 600;
+        }
+      }
+      .support {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        margin-top: 1rem;
+        font-size: 1.8rem;
+        color: #fff;
+        .support-inner {
+          display: flex;
+          align-items: center;
+        }
+        .lukso-logo {
+          width: 200px;
+          height: 2rem;
+        }
+        .ue-logo {
+          width: 170px;
+          height: 2rem;
+          filter: brightness(1000%) invert(100%)
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+        }
+      }
+    }
+  }
+  .banner-container {
+    padding: 1.5rem 0;
+    background-color: #683ab708;
+    border-top: 6px ridge #d0bde6;
+    border-bottom: 6px ridge #d0bde6;
+    color: #30273c;
+    .custom-scroll-text {
+      padding: 1rem 0.1rem;
+      line-height: normal;
+      font-size: 2.4rem !important;
+    }
+  }
+  .widget-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 5rem 2rem;
+    .widgets-title {
+      font-size: 2rem;
+      line-height: 3.5rem;
+    }
+    .widgets-description {
+      font-size: 1.2rem;
+      color: #9d97a3;
+    }
+    .widgets-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px; // spacing between cards
+      max-width: 80%;
+      margin: 0 auto;
+      .tilted-card-demo-text {
+        padding: 0.05rem 0.7rem;
+        font-weight: 600;
+        color: #fff;
+      }
+    }
+    .more-info-container {
+      width: 60%;
+      margin: 3rem 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      font-size: 1.2rem;
+      line-height: 2.2rem;
+      text-align: justify;
+      .more-description {
+        color: #857f8d;
+      }
+      .copy-link-container {
+        margin: 2rem 0 0rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        .integration-title {
+          margin-top: 1.5rem;
+          line-height: 3.5rem;
+          background: unset;
+          -webkit-text-fill-color: unset;
+          color: #595163 !important;
+        }
+        .how-to-use {
+          color: #9d97a3;
+        }
+        .copylink {
+          display: flex;
+          align-items: center;
+          border: 1px solid #ddd;
+          background: #f9f9f9;
+          padding: 12px 16px;
+          border-radius: 10px;
+          max-width: 100%;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          gap: 12px;
+        }
+        .link-input {
+          flex: 1;
+          padding: 8px 12px;
+          border: none;
+          background: transparent;
+          color: #333;
+          outline: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1rem;
+        }
+
+        .copy-button {
+          background-color: #bfa5e0;
+          border: none;
+          color: white;
+          padding: 0.6rem 1.5rem;
+          border-radius: 1rem;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 1rem;
+          transition: background 0.3s;
+        }
+
+        .copy-button:hover {
+          background-color: #a88cd0;
+        }
+      }
+    }
+  }
+  .footer {
+    padding: 3rem 0;
+    max-width: 100%;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url("../assets/images/general/landing2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .footer-company {
+      font-size: 2.5rem;
+      margin: 1rem 0;
+      background: unset;
+      -webkit-text-fill-color: unset;
+      color: #fff !important;
+    }
+    .footer-text {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #fff;
+      a {
+        color: #fff;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Extra small devices (phones, less than 576px)
+@media (max-width: 575.98px) {
+  .landing-page {
+    .title-container {
+      height: 100dvh !important;
+      .content-div {
+        height: 70%;
+        width: 90%;
+        .title {
+          font-size: 2.7rem;
+        }
+        .description {
+          font-size: 1rem;
+        }
+        .support {
+          .support-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+          }
+          .lukso-logo {
+            width: 170px;
+            height: 1.7rem;
+            display: block !important;
+          }
+        }
+      }
+    }
+    .banner-container {
+      .custom-scroll-text {
+        font-size: 1.6rem !important;
+      }
+    }
+    .widget-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      padding: 5rem 1rem !important;
+      .widgets-title {
+        font-size: 1.7rem !important;
+      }
+      .widgets-description {                 
+       text-align: center;            
+      }
+      .widgets-container {                 
+        justify-content: center !important;             
+      }
+      .more-info-container {
+        width: 90% !important;
+        .gooey-nav-container nav ul li {
+          min-width: unset !important;
+        }
+        .gooey-nav-container nav ul {
+          padding: unset !important;
+        }
+        .copy-link-container {
+          max-width: 100%;
+          text-align: center;
+          .how-to-use {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .footer {
+      padding: 6rem 0 !important;
+      min-height: 15vh !important;
+    }
+  } 
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .landing-page {
+    .title-container {
+      height: 100dvh !important;
+      .content-div {
+        height: 75%;
+        width: 90%;
+        .title {
+          font-size: 2.7rem;
+        }
+        .description {
+          font-size: 1.3rem;
+        }
+        .support {
+          .support-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+          }
+          .lukso-logo {
+            width: 170px;
+            height: 1.7rem;            
+            display: block !important;
+          }
+        }
+      }
+    }
+    .banner-container {
+      .custom-scroll-text {
+        font-size: 1.6rem !important;
+      }
+    }
+    .widget-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      padding: 5rem 1rem !important;
+      .widgets-container{
+        width: 100% !important;
+        max-width: 100% !important;      
+        justify-content: center !important;
+      }
+      .widgets-title {
+        font-size: 1.7rem !important;
+      }      
+      .widgets-description {  
+        text-align: center !important;                                   
+      }
+      .more-info-container {
+        width: 90% !important;
+        max-width: 100% !important;        
+        .gooey-nav-container nav ul li {
+          min-width: unset !important;
+        }
+        .gooey-nav-container nav ul {
+          padding: unset !important;
+        }
+        .copy-link-container {
+          max-width: 100%;
+          text-align: center;
+          .how-to-use {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .footer {
+      padding: 6rem 0 !important;
+      min-height: 15vh !important;
+    }
+  } 
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .landing-page {
+    .title-container {
+      height: 100dvh !important;
+      .content-div {
+        height: 70%;
+        width: 90%;
+        .title {
+          font-size: 2.7rem;
+        }
+        .description {
+          font-size: 1.3rem;
+        }
+        
+      }
+    }
+    .banner-container {
+      .custom-scroll-text {
+        font-size: 1.6rem !important;
+      }
+    }
+    .widget-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      padding: 5rem 1rem !important;
+      .widgets-container{
+        width: 100% !important;
+        max-width: 100% !important;      
+        justify-content: center !important;
+      }
+      .widgets-title {
+        font-size: 2.2rem !important;
+      }      
+      .widgets-description {  
+        text-align: center !important;                                   
+      }
+      .more-info-container {
+        width: 90% !important;
+        max-width: 100% !important;        
+        .gooey-nav-container nav ul li {
+          min-width: unset !important;
+        }
+        .gooey-nav-container nav ul {
+          padding: unset !important;
+        }
+        .copy-link-container {
+          max-width: 100%;
+          text-align: center;
+          .how-to-use {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .footer {
+      padding: 6rem 0 !important;
+      min-height: 15vh !important;
+    }
+  } 
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .landing-page {
+    .title-container {
+      height: 100dvh !important;
+      .content-div {
+        height: 70%;
+        width: 90%;
+        .title {
+          font-size: 2.7rem;
+        }
+        .description {
+          font-size: 1.3rem;
+        }
+        
+      }
+    }
+    .banner-container {
+      .custom-scroll-text {
+        font-size: 1.6rem !important;
+      }
+    }
+    .widget-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      padding: 5rem 1rem !important;
+      .widgets-container{
+        width: 100% !important;
+        max-width: 100% !important;      
+        justify-content: center !important;
+      }
+      .widgets-title {
+        font-size: 2.2rem !important;
+      }      
+      .widgets-description {  
+        text-align: center !important;                                   
+      }
+      .more-info-container {
+        width: 70% !important;
+        max-width: 100% !important;        
+        .gooey-nav-container nav ul li {
+          min-width: unset !important;
+        }
+        .gooey-nav-container nav ul {
+          padding: unset !important;
+        }
+        .copy-link-container {
+          max-width: 100%;
+          text-align: center;
+          .how-to-use {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .footer {
+      padding: 6rem 0 !important;
+      min-height: 15vh !important;
+    }
+  } 
+}
