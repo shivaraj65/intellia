@@ -20,11 +20,16 @@ import { PlusOutlined, UserOutlined } from "@ant-design/icons";
 const { TextArea } = Input;
 
 interface props {
+  txnLoading: boolean;
   HighlightData: any;
   blockchainFunctions: any;
 }
 
-const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
+const CarouselComp = ({
+  txnLoading,
+  HighlightData,
+  blockchainFunctions,
+}: props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -59,31 +64,34 @@ const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
           waitForAnimate={true}
         >
           {HighlightData &&
-            HighlightData?.messages?.map((message: any, index: number) => {
-              return (
-                <div className="messageCard" key={index + message}>
-                  <header className={styles.questionComp}>
-                    {HighlightData && HighlightData.name && (
-                      <h3 className="font2">{HighlightData.name}</h3>
-                    )}
-                    {/* {HighlightData && HighlightData.description && (
+            HighlightData?.messages
+              ?.slice()
+              ?.reverse()
+              ?.map((message: any, index: number) => {
+                return (
+                  <div className="messageCard" key={index + message}>
+                    <header className={styles.questionComp}>
+                      {HighlightData && HighlightData.name && (
+                        <h3 className="font2">{HighlightData.name}</h3>
+                      )}
+                      {/* {HighlightData && HighlightData.description && (
                       <p className="font2">{HighlightData.description}</p>
                     )} */}
-                  </header>
+                    </header>
 
-                  <section className="message font2">
-                    {message?.text}
-                    <Divider />
-                    <Avatar
-                      style={{ backgroundColor: "#8c64c8" }}
-                      icon={<UserOutlined />}
-                    />
-                    {/* //sender */}
-                    <span className="title">&nbsp; Anonymous User</span>
-                  </section>
-                </div>
-              );
-            })}
+                    <section className="message font2">
+                      {message?.text}
+                      <Divider />
+                      <Avatar
+                        style={{ backgroundColor: "#8c64c8" }}
+                        icon={<UserOutlined />}
+                      />
+                      {/* //sender */}
+                      <span className="title">&nbsp; Anonymous User</span>
+                    </section>
+                  </div>
+                );
+              })}
         </Carousel>
         <FloatButton
           icon={<PlusOutlined />}
@@ -129,12 +137,14 @@ const CarouselComp = ({ HighlightData, blockchainFunctions }: props) => {
           <Divider />
           <div className={styles.btnContainer}>
             <Button
+              loading={txnLoading}
               className={styles.submitBtn}
               type="primary"
               shape="round"
               onClick={async () => {
                 if (message.length > 0) {
                   await blockchainFunctions.addMessage(message);
+                  handleCancel();
                 } else {
                   antdMessage.open({
                     type: "warning",

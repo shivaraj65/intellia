@@ -5,7 +5,7 @@ import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Divider, message } from "antd";
+import { Divider, message as antdMessage } from "antd";
 import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 import NoContent from "@/components/common/empty-screens/emptyContent";
 import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
@@ -21,6 +21,7 @@ const HighlightScreen = () => {
 
   //applayout states...
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [txnLoading, setTxnLoading] = useState<boolean>(false);
 
   //0 - empty screen / 1- create page /
   const [currentAdminScreen, setCurrentAdminScreen] = useState<number>(0);
@@ -29,15 +30,18 @@ const HighlightScreen = () => {
   const [appStats, setappStats] = useState<any>(null);
   const [HighlightData, setHighlightData] = useState<any>(null);
 
-  useEffect(() => {
-    blockchainFunctions.getStats();
-  }, [accounts, contextAccounts]);
+  const [txnHash, setTxnHash] = useState<any>(null);
+  // const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    blockchainFunctions.getStats();
+  }, [accounts, contextAccounts, isDrawerOpen]);
+
+  useEffect(() => {    
     if (contextAccounts && contextAccounts.length > 0) {
       blockchainFunctions.getHighlights();
     }
-  }, [contextAccounts]);
+  }, [contextAccounts, txnHash]);
 
   const blockchainFunctions = {
     requestConnect: async () => {
@@ -48,7 +52,7 @@ const HighlightScreen = () => {
       const data = await contractApi.getStats();
       console.log("stats data---", data);
       if (typeof data === "string") {
-        message.open({
+        antdMessage.open({
           type: "warning",
           content: data,
         });
@@ -60,7 +64,7 @@ const HighlightScreen = () => {
       const data = await contractApi.getHighlightsforUser(contextAccounts[0]);
       console.log("highlights data---", data);
       if (typeof data === "string") {
-        message.open({
+        antdMessage.open({
           type: "warning",
           content: data,
         });
@@ -73,27 +77,54 @@ const HighlightScreen = () => {
       description: string,
       icon: string
     ) => {
+      setTxnLoading(true);
       const data = await contractApi.createYourHighlight({
         name: name,
         description: description,
         icon: icon,
         accounts: accounts,
       });
-      console.log("data from get stats", data);
+      // console.log("data from get stats", data);
+      antdMessage.open({
+        type: "info",
+        content:
+          "Waits for 1 block confirmation, then returns the transaction receipt.",
+      });
+      await blockchainFunctions.checkTxnStatus(data);     
+      setTxnLoading(false);
     },
     addMessage: async (message: string) => {
+      setTxnLoading(true);
       const data = await contractApi.addMessageForHighlight({
         highlightAddress: contextAccounts[0],
         messageText: message,
         accounts: accounts,
       });
-      console.log("data from create request", data);
-
-      //we will receive a txn id. try to capture the id and make a iterative call no next function to get tit updated..
+      // console.log("data from create request", data);
+      setTxnHash(data);
+      antdMessage.open({
+        type: "info",
+        content:
+          "Waits for 1 block confirmation, then returns the transaction receipt.",
+      });
+      await blockchainFunctions.checkTxnStatus(data);     
+      setTxnLoading(false);
     },
-    checkTransactionCompleted: async (txnId: string) => {
-      //validate the txn and return the result...
-      console.log(txnId);
+    checkTxnStatus: async (txnId: any) => {
+      const data: any = await contractApi.getTransactionStatus(txnId);
+      // console.log("transaction result", data);     
+      if (data?.status === "success") {
+        antdMessage.open({
+          type: "success",
+          content: "Transaction Successfull",
+        });
+      } else {
+        antdMessage.open({
+          type: "warning",
+          content: "Something went wrong.",
+        });
+      }     
+      setTxnHash(null);
     },
   };
 
@@ -160,12 +191,29 @@ const HighlightScreen = () => {
       >
         {/* {contextAccounts && <p>{contextAccounts[0]}</p>}
         {accounts && <p>{accounts[0]}</p>} */}
+        {/* {txnHash && (
+          <span>
+            {typeof txnHash === "string" || typeof txnHash === "number" ? (
+              txnHash
+            ) : (
+              <pre>
+                {JSON.stringify(
+                  txnHash,
+                  (_key, value) =>
+                    typeof value === "bigint" ? value.toString() : value,
+                  2
+                )}
+              </pre>
+            )}
+          </span>
+        )} */}
         {contextAccounts[0] === accounts[0] ? (
           // admin route
           <React.Fragment>
             {HighlightData ? (
               <React.Fragment>
                 <CarouselComp
+                  txnLoading={txnLoading}
                   HighlightData={HighlightData}
                   blockchainFunctions={blockchainFunctions}
                 />
@@ -190,6 +238,7 @@ const HighlightScreen = () => {
           <React.Fragment>
             {HighlightData && HighlightData?.messages.length > 0 ? (
               <CarouselComp
+                txnLoading={txnLoading}
                 HighlightData={HighlightData}
                 blockchainFunctions={blockchainFunctions}
               />

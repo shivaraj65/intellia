@@ -5,6 +5,7 @@ contract Highlights {
     struct Message {
         address sender;
         string text;
+        string icon; //newly added - need to configure contract for this update
         uint256 timestamp;
     }
 
