@@ -28,8 +28,8 @@ const EmptyScreen = ({
         <div className={styles.errorCol1}>
           <div className={styles.imageContainer}>
             <Image
-              src={svgConf.general.empty[1].src}
-              alt={svgConf.general.empty[1].name}
+              src={svgConf.general.empty[2].src}
+              alt={svgConf.general.empty[2].name}
               className={styles.image}
             />
           </div>

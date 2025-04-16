@@ -19,6 +19,13 @@ import LiveCollaborationPana from "@/assets/svg/general/Live collaboration-pana.
 // Empty Icons
 import NoDataCuate from "@/assets/svg/general/No data-cuate.svg";
 import NoDataPana from "@/assets/svg/general/No data-pana.svg";
+import CuriousAmico from "@/assets/svg/general/Curious-amico.svg";
+import CuriousRafiki from "@/assets/svg/general/Curious-rafiki.svg";
+import LightHousePana from "@/assets/svg/general/Lighthouse-pana.svg";
+import OuterSpacePana from "@/assets/svg/general/Outer space-pana.svg";
+//eyes Icons
+import EyseBro from "@/assets/svg/general/Eyes-bro.svg";
+import EyesPana from "@/assets/svg/general/Eyes-pana.svg";
 
 //--------highlights -------------
 import CreativeTeamAmico from "@/assets/svg/highlights/Creative team-amico.svg";
@@ -78,6 +85,14 @@ export const svgConf = {
     empty: [
       { name: "No data-cuate", src: NoDataCuate },
       { name: "No data-pana", src: NoDataPana },
+      { name: "Curious Amico", src: CuriousAmico },
+      { name: "Curious Rafiki", src: CuriousRafiki },
+      { name: "Light House Pana", src: LightHousePana },
+      { name: "Outer Space Pana", src: OuterSpacePana },
+    ],
+    eyes: [
+      { name: "Eyse Bro", src: EyseBro },
+      { name: "Eyes Pana", src: EyesPana },
     ],
   },
   highlights: [
