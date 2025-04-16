@@ -218,4 +218,20 @@ export const contractApi = {
     }
     return null;
   },
+  getTransactionStatus: async (txnHash: any) => {
+    try {
+      const { publicClient } = await contractApi.setupClients();
+
+      const result = await publicClient.waitForTransactionReceipt({
+        hash: txnHash,
+        pollingInterval: 2000,
+        timeout: 60000, // in ms
+      });
+
+      return result;
+    } catch (error: any) {
+      console.log(error);
+      return "Something went wrong while trying to create highlights.";
+    }
+  },
 };
