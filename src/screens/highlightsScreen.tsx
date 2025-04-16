@@ -13,30 +13,30 @@ import CarouselComp from "@/components/highlights/carousel/carousel";
 import { contractApi } from "@/utils/contractInteraction/highlights";
 import AdminPage from "@/components/highlights/adminPage/adminPage";
 
-const testData = {
-  name: "test name 123",
-  description: "description of the highlights",
-  messages: [
-    {
-      sender: "0x0afhoie...",
-      text: "test1",
-      icon: "",
-      timestamp: "",
-    },
-    {
-      sender: "0x0afhoie...",
-      text: "test2",
-      icon: "Smiley face-bro",
-      timestamp: "",
-    },
-    {
-      sender: "0x0afhoie...",
-      text: "test3",
-      icon: "Smiley face-bro",
-      timestamp: "",
-    },
-  ],
-};
+// const testData = {
+//   name: "test name 123",
+//   description: "description of the highlights",
+//   messages: [
+//     {
+//       sender: "0x0afhoie...",
+//       text: "test1",
+//       icon: "",
+//       timestamp: "",
+//     },
+//     {
+//       sender: "0x0afhoie...",
+//       text: "test2",
+//       icon: "Smiley face-bro",
+//       timestamp: "",
+//     },
+//     {
+//       sender: "0x0afhoie...",
+//       text: "test3",
+//       icon: "Smiley face-bro",
+//       timestamp: "",
+//     },
+//   ],
+// };
 
 const HighlightScreen = () => {
   const { message: antdMessage } = App.useApp();
@@ -58,8 +58,7 @@ const HighlightScreen = () => {
   const [appStats, setappStats] = useState<any>(null);
   const [HighlightData, setHighlightData] = useState<any>(null);
 
-  const [txnHash, setTxnHash] = useState<any>(null);
-  // const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [txnHash, setTxnHash] = useState<any>(null);  
 
   useEffect(() => {
     blockchainFunctions.getStats();
@@ -112,6 +111,7 @@ const HighlightScreen = () => {
         icon: icon,
         accounts: accounts,
       });
+      setTxnHash(data);
       // console.log("data from get stats", data);
       antdMessage.open({
         type: "info",
@@ -121,12 +121,12 @@ const HighlightScreen = () => {
       await blockchainFunctions.checkTxnStatus(data);
       setTxnLoading(false);
     },
-    addMessage: async (message: string,icon:string) => {
-      setTxnLoading(true);      
+    addMessage: async (message: string, icon: string) => {
+      setTxnLoading(true);
       const data = await contractApi.addMessageForHighlight({
         highlightAddress: contextAccounts[0],
         messageText: message,
-        icon:icon,
+        icon: icon,
         accounts: accounts,
       });
       // console.log("data from create request", data);
@@ -235,7 +235,14 @@ const HighlightScreen = () => {
               </pre>
             )}
           </span>
-        )} */}       
+        )} */}
+        <CreateHighlights
+          txnLoading={txnLoading}
+          blockchainFunctions={blockchainFunctions}
+          backButtonAction={() => {
+            setCurrentAdminScreen(0);
+          }}
+        />
 
         {contextAccounts[0] === accounts[0] ? (
           // admin route
@@ -246,10 +253,13 @@ const HighlightScreen = () => {
                   <CreateHighlights
                     txnLoading={txnLoading}
                     blockchainFunctions={blockchainFunctions}
+                    backButtonAction={() => {
+                      setCurrentAdminScreen(0);
+                    }}
                   />
                 ) : (
                   <AdminPage
-                    HighlightData={testData}                  
+                    HighlightData={HighlightData}
                     buttonAction={() => {
                       setCurrentAdminScreen(1);
                     }}
@@ -269,6 +279,9 @@ const HighlightScreen = () => {
               <CreateHighlights
                 txnLoading={txnLoading}
                 blockchainFunctions={blockchainFunctions}
+                backButtonAction={() => {
+                  setCurrentAdminScreen(0);
+                }}
               />
             ) : (
               <></>
@@ -285,6 +298,8 @@ const HighlightScreen = () => {
               />
             ) : (
               <NoContent
+                txnLoading={txnLoading}
+                HighlightData={HighlightData}
                 message={"Be the first to add something special about them."}
                 title={"Make It Memorable"}
                 buttonText={"Got a Moment?"}

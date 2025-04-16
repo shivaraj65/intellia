@@ -6,20 +6,15 @@
 import React, { useState } from "react";
 import styles from "./emptyContent.module.scss";
 import Image from "next/image";
-import {
-  Button,
-  Divider,
-  FloatButton,
-  Input,
-  Modal,
-  message as antdMessage,
-} from "antd";
+import { App, Button, Divider, Input, Modal } from "antd";
 import { svgConf } from "@/assets/svgConf";
-import { PlusOutlined } from "@ant-design/icons";
+// import { PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
 interface props {
+  txnLoading: boolean;
+  HighlightData:any;
   message: string;
   title: string;
   buttonText: string;
@@ -27,13 +22,18 @@ interface props {
 }
 
 const NoContent = ({
+  txnLoading = false,
+  HighlightData,
   title = "",
   message = "",
   buttonText = "",
   blockchainFunctions,
 }: props) => {
+  const { message: antdMessage } = App.useApp();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messages, setMessages] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState<string>("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -85,14 +85,14 @@ const NoContent = ({
             </div>
           </div>
         </div>
-        <FloatButton
+        {/* <FloatButton
           icon={<PlusOutlined />}
           style={{bottom:12,right:12}}
           tooltip={<div>Add Your Highlight</div>}
           onClick={() => {
             showModal();
           }}
-        />
+        /> */}
       </div>
 
       <Modal
@@ -105,6 +105,43 @@ const NoContent = ({
         footer={null}
       >
         <div className={styles.container}>
+          <header className={styles.questionComp}>
+            {HighlightData && HighlightData.name && (
+              <h3 className="font2">{HighlightData.name}</h3>
+            )}
+            {HighlightData && HighlightData.description && (
+              <p className="font2">{HighlightData.description}</p>
+            )}
+          </header>
+          <div className={styles.imagecontainer}>
+            <p className={styles.label + " font2"}>
+              How Does This Memory Feel?
+            </p>
+            <div className={styles.iconContainer}>
+              {svgConf.highlights.map((icon, index) => {
+                return (
+                  <div
+                    className={
+                      selectedIcon === icon.name
+                        ? styles.selectedIconComp
+                        : styles.iconComp
+                    }
+                    key={icon.name + index}
+                    onClick={() => {
+                      setSelectedIcon(icon.name);
+                    }}
+                  >
+                    <Image
+                      src={icon.src}
+                      alt={icon.name}
+                      className={styles.image}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {/* <Divider /> */}
           <span className={styles.label + " font2"}>Your Message :</span>
           <TextArea
             className={styles.inputCont}
@@ -112,7 +149,7 @@ const NoContent = ({
             showCount
             maxLength={400}
             value={messages}
-            onChange={(e: any) => {
+            onChange={(e) => {
               updateMessage(e.target.value);
             }}
             placeholder="Your highlight goes here..."
@@ -120,17 +157,26 @@ const NoContent = ({
           <Divider />
           <div className={styles.btnContainer}>
             <Button
+              loading={txnLoading}
               className={styles.submitBtn}
               type="primary"
               shape="round"
               onClick={async () => {
-                if (messages.length > 0) {
-                  await blockchainFunctions.addMessage(messages);
+                if (message.length > 0 && selectedIcon.length > 0) {
+                  await blockchainFunctions.addMessage(messages, selectedIcon);
+                  handleCancel();
                 } else {
-                  antdMessage.open({
-                    type: "warning",
-                    content: "Please Enter a message to continue",
-                  });
+                  if (message.length === 0) {
+                    antdMessage.open({
+                      type: "warning",
+                      content: "Please Enter a message to continue",
+                    });
+                  } else {
+                    antdMessage.open({
+                      type: "warning",
+                      content: "Please select a image to continue",
+                    });
+                  }
                 }
               }}
             >
