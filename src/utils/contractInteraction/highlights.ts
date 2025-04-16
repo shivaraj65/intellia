@@ -18,6 +18,7 @@ interface createProps {
 interface addMessageProps {
   highlightAddress: string;
   messageText: string;
+  icon: string;
   accounts: any[];
 }
 
@@ -124,6 +125,7 @@ export const contractApi = {
   addMessageForHighlight: async ({
     highlightAddress,
     messageText,
+    icon,
     accounts,
   }: addMessageProps) => {
     try {
@@ -139,6 +141,7 @@ export const contractApi = {
       //   alert("No user profiles found.");
       //   return;
       // }
+      console.log(icon);
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,

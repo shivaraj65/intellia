@@ -1,0 +1,79 @@
+@use "../../../styles//theme/appTheme.scss";
+
+.adminPage {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  .innerComp {
+    height: 100%;
+    width: 100%;
+    .questionComp {
+      width: 100%;
+      text-align: center;
+      .title {
+        font-size: 1.15rem;
+        color: appTheme.$mix-dark-100;
+      }
+      .description {
+        font-size: 1rem;
+        color: appTheme.$mix-dark-500;
+      }
+    }
+    .highlightsData {
+      width: 100%;
+      margin-top: 2rem;
+      .messages {
+        width: 100%;        
+        display: flex;
+        flex-direction: column;
+        align-items: center;        
+        .message {
+          width: 90%;
+          padding: 2rem 1rem 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+          border-radius: 10px;
+          border: 1px solid #d0bde6;
+          margin: 0.5rem 0;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+          .userCard{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.4rem;
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 879px) {
+  // styles for 2-column layout
+  .adminPage {   
+    .innerComp {
+      height: 100%;
+      width: 80%;      
+      margin: auto;    
+    }
+  }
+}
+
+// Desktop layout: (≥ 880px)
+@container (min-width: 880px) {
+  // styles for wider screens
+  .adminPage {   
+    .innerComp {
+      height: 100%;
+      width: 65%;      
+      margin: auto;    
+    }
+  }
+}

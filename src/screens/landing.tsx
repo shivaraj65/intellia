@@ -13,22 +13,35 @@ const widgetsData = [
       "Spotlight messages that matter — personal, public, and on-chain.",
     description: (
       <span>
-        Highlights is a lightweight yet powerful widget built on the LUKSO
-        blockchain, designed to bring a layer of human credibility and social
-        proof to your Universal Profile. It allows others to leave public
-        messages about you — shoutouts, endorsements, gratitude, or reflections
-        — which are stored immutably on-chain. These highlights become living
-        signals of who you are, how you're perceived, and what you've
-        contributed to the ecosystem. <br /> Each Universal Profile can feature
-        the latest 10 highlights, making space intentional and meaningful.
-        Rather than static bios or self-written claims, Highlights bring
-        community-driven reputation to your identity — one message at a time.
-        Whether you're a builder, collector, curator, or creator, this widget
-        adds a layer of social trust, warmth, and visibility that enhances how
-        you're seen in the LUKSO ecosystem.
+        What if your profile could truly reflect how others feel about you?
+        <div style={{ marginBottom: "1rem" }} />
+        Not just stats or self-written bios — but real emotions, real words.
+        <div style={{ marginBottom: "1rem" }} />
+        <b>Highlights</b> is a lightweight yet powerful widget built on the{" "}
+        <b>LUKSO blockchain</b>, designed to add a layer of{" "}
+        <b>human credibility and social warmth</b> to your Universal Profile. It
+        lets others publicly share messages about you — a shoutout, a thank-you,
+        a reflection, or a quiet moment of appreciation —{" "}
+        <b>all immutably stored on-chain</b>.
+        <div style={{ marginBottom: "1rem" }} />
+        It’s not about followers. It’s about being <b>seen, remembered</b> and
+        <b> celebrated</b> by your community.
+        <div style={{ marginBottom: "1rem" }} />
+        Instead of static claims, your profile becomes a{" "}
+        <b>living mosaic of reputation</b>, shaped by those you’ve impacted.
+        Whether you're a <b>builder, collector, curator, or creator</b>,
+        Highlights brings <b>emotional depth, trust, and visibility</b> to how
+        you're experienced in the LUKSO ecosystem.
+        <div style={{ marginBottom: "1rem" }} />
+        Each profile displays the latest 10 highlights, making space intentional
+        and meaningful — every message a signal of connection.
+        <div style={{ marginBottom: "1rem" }} />
+        So go ahead — share the feeling you never got to say.
+        <div style={{ marginBottom: "0.5rem" }} />
+        Or give someone their moment to be recognized.
       </span>
     ),
-    icon: svgConf.highlights[12],
+    icon: svgConf.highlights[0],
   },
   {
     name: "Polls",
@@ -36,19 +49,34 @@ const widgetsData = [
       "Ask meaningful questions. Gather on-chain answers. Understand your people.",
     description: (
       <span>
-        Polls is a decentralized widget that empowers Universal Profile users to
-        ask questions and gather feedback — directly from their followers or the
-        broader community. Whether you're a creator seeking input, a brand
-        testing ideas, or a builder validating features, Polls offers a
-        trustless, transparent way to collect opinions and insights.
-        <br /> Every response is securely stored on the LUKSO blockchain,
-        ensuring authenticity and verifiability. By turning basic engagement
-        into constructive, on-chain dialogue, users can make smarter decisions,
-        validate ideas, and involve their audience in the creative or
-        development process.
-        <br /> Polls foster a new layer of interactive expression and
-        collaborative feedback, giving more meaning to your Universal Profile
-        and your relationship with your community.
+        What if feedback felt more meaningful?
+        <div style={{ marginBottom: "1rem" }} />
+        What if asking a question could spark real, transparent dialogue — not
+        just surface-level engagement?
+        <div style={{ marginBottom: "1rem" }} />
+        Polls is a decentralized widget built on the <b>LUKSO blockchain</b> ,
+        empowering Universal Profile users to ask questions and gather insights
+        directly from their community. Whether you're a
+        <b> creator shaping your next move</b> , a <b>brand testing an idea</b>,
+        or a <b>builder validating a feature</b>
+        , Polls helps you tap into collective thinking — openly, trustlessly,
+        and on-chain.
+        <div style={{ marginBottom: "1rem" }} />
+        Every response is securely stored on the blockchain, making your
+        feedback <b>verifiable, transparent, and censorship-resistant</b>.
+        <div style={{ marginBottom: "1rem" }} />
+        This isn’t just another voting tool — it’s a way to turn engagement into
+        a two-way conversation. To co-create. To involve others in the journey.
+        <div style={{ marginBottom: "1rem" }} />
+        With Polls, your Universal Profile becomes a space for collaboration —
+        where curiosity leads, and your community has a voice in what comes
+        next.
+        <div style={{ marginBottom: "1rem" }} />
+        Ask better questions.
+        <div style={{ marginBottom: "0.5rem" }} />
+        Get smarter answers.
+        <div style={{ marginBottom: "0.5rem" }} />
+        Build together.
       </span>
     ),
 
@@ -60,18 +88,28 @@ const widgetsData = [
       "Collect authentic feedback — transparent, trusted, and on-chain.",
     description: (
       <span>
-        Reviews is a decentralized widget that lets users collect public
-        feedback directly through their Universal Profile. Whether you're a
-        creator, performer, builder, or seller — you can create custom review
-        forms to gather responses on anything: your latest product, an event you
-        hosted, a service you offer, or a community project you led.
-        <br /> Every review is etched on the LUKSO blockchain, ensuring that
-        feedback is tamper-proof, publicly visible, and permanently tied to your
-        identity. This enables followers and customers to contribute to your
-        reputation in a way that’s transparent and verifiable.
-        <br /> The Reviews widget turns fleeting feedback into lasting social
-        proof, helping you build greater credibility, deeper trust, and a more
-        complete digital identity. It's your reputation — backed by the chain.
+        What if your reputation could speak for itself?
+        <div style={{ marginBottom: "1rem" }} />
+        Not just through followers or metrics — but through{" "}
+        <b>real, lasting feedback</b> from the people you've impacted.
+        <div style={{ marginBottom: "1rem" }} />
+        <b>Reviews</b> is a decentralized widget for your Universal Profile,
+        designed to collect authentic, public feedback — all immutably stored on
+        the LUKSO blockchain. Whether you're a creator, builder, performer, or
+        seller, you can craft custom review forms to gather reflections on
+        anything you’ve put into the world: a product, a performance, a project,
+        or an experience.
+        <div style={{ marginBottom: "1rem" }} />
+        Every review is <b>tamper-proof, publicly visible</b>, and{" "}
+        <b>forever tied to your identity</b>, turning fleeting impressions into
+        powerful social proof.
+        <div style={{ marginBottom: "1rem" }} />
+        This isn’t just about ratings. It’s about building{" "}
+        <b>trust, credibility</b>, and a digital presence shaped by the people
+        who know your work best.
+        <div style={{ marginBottom: "1rem" }} />
+        With Reviews, your Universal Profile becomes a trusted source of
+        reputation — <b>earned, shared, and backed by the chain.</b>
       </span>
     ),
 
@@ -124,7 +162,7 @@ const LandingPage = () => {
           </span>
           <div className="support">
             <div className="support-inner">
-              <span>Built on the </span>
+              <span>Built on </span>
               <Image
                 src={"/images/lukso-full-logo.svg"}
                 width={40}

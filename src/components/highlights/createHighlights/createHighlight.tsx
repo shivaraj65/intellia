@@ -8,10 +8,11 @@ import { imagesConf } from "@/assets/imagesConf";
 import Image from "next/image";
 
 interface props {
+  txnLoading: boolean;
   blockchainFunctions: any;
 }
 
-const CreateHighlights = ({ blockchainFunctions }: props) => {
+const CreateHighlights = ({ txnLoading, blockchainFunctions }: props) => {
   const { message } = App.useApp();
 
   const [formDetails, setFormDetails] = useState<{
@@ -133,6 +134,7 @@ const CreateHighlights = ({ blockchainFunctions }: props) => {
           }}
         />
         <Button
+          loading={txnLoading}
           className={styles.submitBtn}
           type="primary"
           shape="round"
@@ -140,7 +142,7 @@ const CreateHighlights = ({ blockchainFunctions }: props) => {
             await validateFormDetails(formDetails, false);
             const isvalid = await validateFormDetails(formDetails, true);
             if (isvalid) {
-              blockchainFunctions.createHighlights(
+              await blockchainFunctions.createHighlights(
                 formDetails.name,
                 formDetails.description,
                 formDetails.icon
