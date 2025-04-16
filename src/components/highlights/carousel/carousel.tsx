@@ -39,8 +39,9 @@ const CarouselComp = ({
   };
 
   const handleCancel = () => {
+    setSelectedIcon("");
     setMessage("");
-    setIsModalOpen(false);
+    setIsModalOpen(false);    
   };
 
   const updateMessage = (valye: string) => {
@@ -76,8 +77,21 @@ const CarouselComp = ({
                     )} */}
                     </header>
 
-                    <section className="message font2">
-                      {message?.text}
+                    <section className="message font2">                      
+                      {svgConf.highlights.map((icon, index) => {
+                        if (icon.name === message.icon) {
+                          return (
+                            <div key={index} className="pigeon">
+                              <Image
+                                src={icon.src}
+                                alt={icon.name} 
+                                className={"displayimage"}
+                              />
+                               {message?.text}
+                            </div>
+                          );
+                        }
+                      })}                     
                       <Divider />
                       <Avatar
                         style={{ backgroundColor: "#8c64c8" }}
@@ -119,7 +133,9 @@ const CarouselComp = ({
             )}
           </header>
           <div className={styles.imagecontainer}>
-            <p className={styles.label + " font2"}>How Does This Memory Feel?</p>
+            <p className={styles.label + " font2"}>
+              How Does This Memory Feel?
+            </p>
             <div className={styles.iconContainer}>
               {svgConf.highlights.map((icon, index) => {
                 return (
@@ -165,14 +181,22 @@ const CarouselComp = ({
               type="primary"
               shape="round"
               onClick={async () => {
-                if (message.length > 0) {
-                  await blockchainFunctions.addMessage(message,selectedIcon);
+                if (message.length > 0 && selectedIcon.length > 0) {
+                  await blockchainFunctions.addMessage(message, selectedIcon);
                   handleCancel();
                 } else {
-                  antdMessage.open({
-                    type: "warning",
-                    content: "Please Enter a message to continue",
-                  });
+                  if(message.length === 0){
+                    antdMessage.open({
+                      type: "warning",
+                      content: "Please Enter a message to continue",
+                    });
+                  }else{
+                    antdMessage.open({
+                      type: "warning",
+                      content: "Please select a image to continue",
+                    });
+                  }
+                  
                 }
               }}
             >

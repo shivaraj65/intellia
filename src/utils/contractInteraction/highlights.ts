@@ -140,14 +140,13 @@ export const contractApi = {
       // if (accounts.length === 0) {
       //   alert("No user profiles found.");
       //   return;
-      // }
-      console.log(icon);
+      // }      
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "writeMessage",
         account: accounts[0],
-        args: [highlightAddress, messageText],
+        args: [highlightAddress, messageText, icon],
       });
       console.log("testResults-----", testResults);
       const result = await walletClient.writeContract({
