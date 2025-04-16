@@ -45,6 +45,7 @@ const NoContent = ({
 
   const handleCancel = () => {
     setMessages("");
+    setSelectedIcon("");
     setIsModalOpen(false);
   };
 
@@ -57,8 +58,8 @@ const NoContent = ({
         <div className={styles.errorCol1}>
           <div className={styles.imageContainer}>
             <Image
-              src={svgConf.general?.empty?.[0]?.src}
-              alt={svgConf.general?.empty?.[0]?.name}
+              src={svgConf.general?.empty?.[4]?.src}
+              alt={svgConf.general?.empty?.[4]?.name}
               className={styles.image}
             />
           </div>
@@ -155,6 +156,7 @@ const NoContent = ({
             placeholder="Your highlight goes here..."
           />
           <Divider />
+
           <div className={styles.btnContainer}>
             <Button
               loading={txnLoading}

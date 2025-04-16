@@ -58,7 +58,7 @@ const HighlightScreen = () => {
   const [appStats, setappStats] = useState<any>(null);
   const [HighlightData, setHighlightData] = useState<any>(null);
 
-  const [txnHash, setTxnHash] = useState<any>(null);  
+  const [txnHash, setTxnHash] = useState<any>(null);
 
   useEffect(() => {
     blockchainFunctions.getStats();
@@ -236,13 +236,6 @@ const HighlightScreen = () => {
             )}
           </span>
         )} */}
-        <CreateHighlights
-          txnLoading={txnLoading}
-          blockchainFunctions={blockchainFunctions}
-          backButtonAction={() => {
-            setCurrentAdminScreen(0);
-          }}
-        />
 
         {contextAccounts[0] === accounts[0] ? (
           // admin route
