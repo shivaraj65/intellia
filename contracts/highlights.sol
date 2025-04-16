@@ -5,7 +5,7 @@ contract Highlights {
     struct Message {
         address sender;
         string text;
-        string icon; //newly added - need to configure contract for this update
+        string icon; 
         uint256 timestamp;
     }
 
@@ -15,7 +15,7 @@ contract Highlights {
         string icon;
         address creator;
         Message[] messages;
-        uint256 nextIndex; // new: pointer to the next message slot
+        uint256 nextIndex; 
         bool exists;
     }
 
@@ -31,17 +31,24 @@ contract Highlights {
         string calldata description,
         string calldata icon
     ) external {
-        require(!highlights[msg.sender].exists, "Highlight already exists");
+        Highlight storage highlight = highlights[msg.sender];
 
+        // Only add to highlightUsers on first creation
+        if (!highlight.exists) {
+            highlightUsers.push(msg.sender);
+            totalUsers++;
+            highlight.exists = true;
+        }
+        // Always (re)set all fields
         highlights[msg.sender].name = name;
         highlights[msg.sender].description = description;
         highlights[msg.sender].icon = icon;
         highlights[msg.sender].creator = msg.sender;
         highlights[msg.sender].nextIndex = 0;
         highlights[msg.sender].exists = true;
+        delete highlight.messages; 
 
-        highlightUsers.push(msg.sender);
-        totalUsers++;
+        highlightUsers.push(msg.sender);        
     }
 
     /// @notice View a user's highlight
@@ -62,13 +69,14 @@ contract Highlights {
     }
 
     /// @notice Write a message on someone else's highlight
-    function writeMessage(address to, string calldata messageText) external {
+    function writeMessage(address to, string calldata messageText, string calldata icon) external {
         require(highlights[to].exists, "Highlight not found");
         require(to != msg.sender, "Can't message your own highlight");
 
         Message memory newMessage = Message({
             sender: msg.sender,
             text: messageText,
+            icon:icon,
             timestamp: block.timestamp
         });
 

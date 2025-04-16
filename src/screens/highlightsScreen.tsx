@@ -20,19 +20,19 @@ const testData = {
     {
       sender: "0x0afhoie...",
       text: "test1",
-      icon: "test",
+      icon: "",
       timestamp: "",
     },
     {
       sender: "0x0afhoie...",
       text: "test2",
-      icon: "test",
+      icon: "Smiley face-bro",
       timestamp: "",
     },
     {
       sender: "0x0afhoie...",
       text: "test3",
-      icon: "test",
+      icon: "Smiley face-bro",
       timestamp: "",
     },
   ],
@@ -235,12 +235,7 @@ const HighlightScreen = () => {
               </pre>
             )}
           </span>
-        )} */}
-        <CarouselComp
-          txnLoading={txnLoading}
-          HighlightData={HighlightData}
-          blockchainFunctions={blockchainFunctions}
-        />
+        )} */}       
 
         {contextAccounts[0] === accounts[0] ? (
           // admin route

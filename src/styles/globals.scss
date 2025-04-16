@@ -53,7 +53,6 @@
   }
 }
 
-
 //-----------------react-bits global-----------------
 .distortion-container {
   width: 100%;
@@ -130,12 +129,12 @@
             max-height: 100%;
             width: 100% !important;
             max-width: 100%;
-           
+
             align-content: center;
             overflow-y: auto;
-            .message {       
+            .message {
               background-color: #e5daf1;
-              border-radius: 12px;                  
+              border-radius: 12px;
               padding: 2rem 1.5rem;
               white-space: normal;
               overflow-wrap: break-word;
@@ -145,7 +144,38 @@
               text-overflow: unset;
               text-align: justify;
               font-size: 1rem;
-              font-weight: 500;              
+              font-weight: 500;
+              .pigeon {
+                .displayimage {
+                  margin: auto;
+                  width: 60%;
+                  height: auto;
+                }
+              }
+              @container (min-width: 433px) and (max-width: 879px) {
+                .pigeon {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-evenly;
+                  .displayimage {
+                    display: flex;
+                    width: 35%;
+                    margin: unset;
+                  }
+                }
+              }
+              @container (min-width: 880px) {                
+                .pigeon {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-evenly;
+                  .displayimage {
+                    display: flex;
+                    width: 40%;
+                    margin: unset;
+                  }
+                }
+              }
             }
           }
         }
