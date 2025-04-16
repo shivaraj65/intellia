@@ -6,13 +6,19 @@ import { Input, Button, Modal } from "antd";
 import { App } from "antd";
 import { imagesConf } from "@/assets/imagesConf";
 import Image from "next/image";
+import { LeftOutlined } from "@ant-design/icons";
 
 interface props {
   txnLoading: boolean;
   blockchainFunctions: any;
+  backButtonAction: () => void;
 }
 
-const CreateHighlights = ({ txnLoading, blockchainFunctions }: props) => {
+const CreateHighlights = ({
+  txnLoading,
+  blockchainFunctions,
+  backButtonAction,
+}: props) => {
   const { message } = App.useApp();
 
   const [formDetails, setFormDetails] = useState<{
@@ -79,7 +85,20 @@ const CreateHighlights = ({ txnLoading, blockchainFunctions }: props) => {
   return (
     <div className={styles.creatHighlights}>
       <div className={styles.createForm}>
-        <h2 className={styles.createTitle}>Start a New Highlight</h2>
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <Button
+            type="text"
+            icon={<LeftOutlined />}
+            onClick={backButtonAction}
+          ></Button>
+          <span className={styles.createTitle}>Start a New Highlight</span>
+        </div>
+
+        <br />
         <span className={styles.label + " font2"}>Icon :</span>
         <div className={styles.iconContainer}>
           {imagesConf.highlights.icons.map((icon, index) => {
@@ -111,7 +130,7 @@ const CreateHighlights = ({ txnLoading, blockchainFunctions }: props) => {
         <Input
           className={styles.input + " font1"}
           showCount
-          maxLength={20}
+          maxLength={40}
           value={formDetails.name}
           onChange={(e) => {
             setFormDetails({
@@ -124,7 +143,7 @@ const CreateHighlights = ({ txnLoading, blockchainFunctions }: props) => {
         <Input
           className={styles.input + " font1"}
           showCount
-          maxLength={50}
+          maxLength={100}
           value={formDetails.description}
           onChange={(e) => {
             setFormDetails({
