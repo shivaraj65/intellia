@@ -118,10 +118,10 @@
       align-items: center;
       gap: 2rem;
       font-size: 1.2rem;
-      line-height: 2.2rem;
+      line-height: 2.3rem;
       text-align: justify;
       .more-description {
-        color: #857f8d;
+        color: #5f5b64;
       }
       .copy-link-container {
         margin: 2rem 0 0rem;
@@ -145,10 +145,11 @@
           border: 1px solid #ddd;
           background: #f9f9f9;
           padding: 12px 16px;
-          border-radius: 10px;
+          border-radius: 10px;          
           max-width: 100%;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-          gap: 12px;
+          gap: 12px;          
+          // min-width: 300px !important;
         }
         .link-input {
           flex: 1;
@@ -160,6 +161,8 @@
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 1rem;
+          direction: rtl;
+          text-align: left;          
         }
 
         .copy-button {
@@ -253,11 +256,11 @@
       .widgets-title {
         font-size: 1.7rem !important;
       }
-      .widgets-description {                 
-       text-align: center;            
+      .widgets-description {
+        text-align: center;
       }
-      .widgets-container {                 
-        justify-content: center !important;             
+      .widgets-container {
+        justify-content: center !important;
       }
       .more-info-container {
         width: 90% !important;
@@ -280,7 +283,7 @@
       padding: 6rem 0 !important;
       min-height: 15vh !important;
     }
-  } 
+  }
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -305,7 +308,7 @@
           }
           .lukso-logo {
             width: 170px;
-            height: 1.7rem;            
+            height: 1.7rem;
             display: block !important;
           }
         }
@@ -322,20 +325,20 @@
       gap: 1rem;
       align-items: center;
       padding: 5rem 1rem !important;
-      .widgets-container{
+      .widgets-container {
         width: 100% !important;
-        max-width: 100% !important;      
+        max-width: 100% !important;
         justify-content: center !important;
       }
       .widgets-title {
         font-size: 1.7rem !important;
-      }      
-      .widgets-description {  
-        text-align: center !important;                                   
+      }
+      .widgets-description {
+        text-align: center !important;
       }
       .more-info-container {
         width: 90% !important;
-        max-width: 100% !important;        
+        max-width: 100% !important;
         .gooey-nav-container nav ul li {
           min-width: unset !important;
         }
@@ -355,7 +358,7 @@
       padding: 6rem 0 !important;
       min-height: 15vh !important;
     }
-  } 
+  }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -372,7 +375,6 @@
         .description {
           font-size: 1.3rem;
         }
-        
       }
     }
     .banner-container {
@@ -386,20 +388,20 @@
       gap: 1rem;
       align-items: center;
       padding: 5rem 1rem !important;
-      .widgets-container{
+      .widgets-container {
         width: 100% !important;
-        max-width: 100% !important;      
+        max-width: 100% !important;
         justify-content: center !important;
       }
       .widgets-title {
         font-size: 2.2rem !important;
-      }      
-      .widgets-description {  
-        text-align: center !important;                                   
+      }
+      .widgets-description {
+        text-align: center !important;
       }
       .more-info-container {
         width: 90% !important;
-        max-width: 100% !important;        
+        max-width: 100% !important;
         .gooey-nav-container nav ul li {
           min-width: unset !important;
         }
@@ -419,7 +421,7 @@
       padding: 6rem 0 !important;
       min-height: 15vh !important;
     }
-  } 
+  }
 }
 
 // Large devices (desktops, 992px and up)
@@ -436,7 +438,6 @@
         .description {
           font-size: 1.3rem;
         }
-        
       }
     }
     .banner-container {
@@ -450,20 +451,20 @@
       gap: 1rem;
       align-items: center;
       padding: 5rem 1rem !important;
-      .widgets-container{
+      .widgets-container {
         width: 100% !important;
-        max-width: 100% !important;      
+        max-width: 100% !important;
         justify-content: center !important;
       }
       .widgets-title {
         font-size: 2.2rem !important;
-      }      
-      .widgets-description {  
-        text-align: center !important;                                   
+      }
+      .widgets-description {
+        text-align: center !important;
       }
       .more-info-container {
         width: 70% !important;
-        max-width: 100% !important;        
+        max-width: 100% !important;
         .gooey-nav-container nav ul li {
           min-width: unset !important;
         }
@@ -483,5 +484,5 @@
       padding: 6rem 0 !important;
       min-height: 15vh !important;
     }
-  } 
+  }
 }

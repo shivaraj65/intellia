@@ -2,20 +2,14 @@
 
 import React, { useState } from "react";
 import styles from "./carousel.module.scss";
-import {
-  Input,
-  Button,
-  Modal,
-  Divider,
-  Avatar,
-  FloatButton,
-  message as antdMessage,
-} from "antd";
+import { Input, Button, Modal, Divider, Avatar, FloatButton, App } from "antd";
 import { Carousel } from "antd";
 // import { App } from "antd";
 // import { imagesConf } from "@/assets/imagesConf";
 // import Image from "next/image";
 import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { svgConf } from "@/assets/svgConf";
+import Image from "next/image";
 
 const { TextArea } = Input;
 
@@ -30,8 +24,11 @@ const CarouselComp = ({
   HighlightData,
   blockchainFunctions,
 }: props) => {
+  const { message: antdMessage } = App.useApp();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState<string>("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -121,6 +118,32 @@ const CarouselComp = ({
               <p className="font2">{HighlightData.description}</p>
             )}
           </header>
+          <div className={styles.imagecontainer}>
+            <p className={styles.label + " font2"}>How Does This Memory Feel?</p>
+            <div className={styles.iconContainer}>
+              {svgConf.highlights.map((icon, index) => {
+                return (
+                  <div
+                    className={
+                      selectedIcon === icon.name
+                        ? styles.selectedIconComp
+                        : styles.iconComp
+                    }
+                    key={icon.name + index}
+                    onClick={() => {
+                      setSelectedIcon(icon.name);
+                    }}
+                  >
+                    <Image
+                      src={icon.src}
+                      alt={icon.name}
+                      className={styles.image}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           {/* <Divider /> */}
           <span className={styles.label + " font2"}>Your Message :</span>
           <TextArea
@@ -143,7 +166,7 @@ const CarouselComp = ({
               shape="round"
               onClick={async () => {
                 if (message.length > 0) {
-                  await blockchainFunctions.addMessage(message);
+                  await blockchainFunctions.addMessage(message,selectedIcon);
                   handleCancel();
                 } else {
                   antdMessage.open({

@@ -12,45 +12,76 @@
     margin: auto;
     .customCarousel {
       height: 100%;
-      width: 100%;      
-      span{
+      width: 100%;
+      span {
         letter-spacing: 0.08rem;
       }
-      .questionComp{
+      .questionComp {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;        
-      }  
+        flex-direction: column;
+      }
     }
   }
 }
-.addHighlightModal{    
-    .container{
-        padding: 1rem 0.5rem;
-        .questionComp{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;  
-          padding-bottom: 0.5rem;      
-        }  
-        .inputCont{
-            margin-top: 0.3rem;
-            margin-bottom: 1rem;            
+.addHighlightModal {
+  .container {
+    padding: 1rem 0.5rem;
+    .questionComp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 0.5rem;
+    }
+    .imagecontainer{
+      .iconContainer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        overflow-x: auto !important;
+        margin-bottom: 1rem;
+        padding-bottom: 0.4rem;
+        .iconComp {
+          padding: 0.2rem;
+          display: inline-block;
+          margin: 0 0.2rem;
+          border: 2px solid transparent;
+          img {
+            height: 120px;
+            width: 120px;
+          }
         }
-        .btnContainer{
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;            
-            button{
-                font-weight: 600;
-                padding-left: 2rem !important;
-                padding-right: 2rem !important;
-            }
+        .selectedIconComp {
+          border-radius: 10px;
+          border: 2px solid appTheme.$primary-600;
+          padding: 0.2rem;
+          margin: 0 0.2rem;
+          display: inline-block;
+          img {
+            height: 120px;
+            width: 120px;
+          }
         }
+      }
     }
    
+    .inputCont {
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+    }
+    .btnContainer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      button {
+        font-weight: 600;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+    }
+  }
 }
 
 // Two-column layout: Small tablets and up (≥ 433px)
@@ -58,7 +89,7 @@
   // styles for 2-column layout
   .carouselComp {
     .innerComp {
-        width: 90%;
+      width: 90%;
     }
   }
 }
@@ -68,7 +99,7 @@
   // styles for wider screens
   .carouselComp {
     .innerComp {
-        width: 65%;
+      width: 65%;
     }
   }
 }

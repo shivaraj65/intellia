@@ -5,14 +5,42 @@ import styles from "@/styles/screens/highlightsScreen.module.scss";
 import AppLayout from "@/layout/appLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Divider, message as antdMessage } from "antd";
+import { App, Divider } from "antd";
 import EmptyScreen from "@/components/common/empty-screens/emptyScreen";
 import NoContent from "@/components/common/empty-screens/emptyContent";
 import CreateHighlights from "@/components/highlights/createHighlights/createHighlight";
 import CarouselComp from "@/components/highlights/carousel/carousel";
 import { contractApi } from "@/utils/contractInteraction/highlights";
+import AdminPage from "@/components/highlights/adminPage/adminPage";
+
+const testData = {
+  name: "test name 123",
+  description: "description of the highlights",
+  messages: [
+    {
+      sender: "0x0afhoie...",
+      text: "test1",
+      icon: "test",
+      timestamp: "",
+    },
+    {
+      sender: "0x0afhoie...",
+      text: "test2",
+      icon: "test",
+      timestamp: "",
+    },
+    {
+      sender: "0x0afhoie...",
+      text: "test3",
+      icon: "test",
+      timestamp: "",
+    },
+  ],
+};
 
 const HighlightScreen = () => {
+  const { message: antdMessage } = App.useApp();
+
   const accounts = useSelector((state: RootState) => state.upProvider.accounts);
   const contextAccounts = useSelector(
     (state: RootState) => state.upProvider.contextAccounts
@@ -37,7 +65,7 @@ const HighlightScreen = () => {
     blockchainFunctions.getStats();
   }, [accounts, contextAccounts, isDrawerOpen]);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (contextAccounts && contextAccounts.length > 0) {
       blockchainFunctions.getHighlights();
     }
@@ -90,14 +118,15 @@ const HighlightScreen = () => {
         content:
           "Waits for 1 block confirmation, then returns the transaction receipt.",
       });
-      await blockchainFunctions.checkTxnStatus(data);     
+      await blockchainFunctions.checkTxnStatus(data);
       setTxnLoading(false);
     },
-    addMessage: async (message: string) => {
-      setTxnLoading(true);
+    addMessage: async (message: string,icon:string) => {
+      setTxnLoading(true);      
       const data = await contractApi.addMessageForHighlight({
         highlightAddress: contextAccounts[0],
         messageText: message,
+        icon:icon,
         accounts: accounts,
       });
       // console.log("data from create request", data);
@@ -107,12 +136,12 @@ const HighlightScreen = () => {
         content:
           "Waits for 1 block confirmation, then returns the transaction receipt.",
       });
-      await blockchainFunctions.checkTxnStatus(data);     
+      await blockchainFunctions.checkTxnStatus(data);
       setTxnLoading(false);
     },
     checkTxnStatus: async (txnId: any) => {
       const data: any = await contractApi.getTransactionStatus(txnId);
-      // console.log("transaction result", data);     
+      // console.log("transaction result", data);
       if (data?.status === "success") {
         antdMessage.open({
           type: "success",
@@ -123,7 +152,7 @@ const HighlightScreen = () => {
           type: "warning",
           content: "Something went wrong.",
         });
-      }     
+      }
       setTxnHash(null);
     },
   };
@@ -207,16 +236,30 @@ const HighlightScreen = () => {
             )}
           </span>
         )} */}
+        <CarouselComp
+          txnLoading={txnLoading}
+          HighlightData={HighlightData}
+          blockchainFunctions={blockchainFunctions}
+        />
+
         {contextAccounts[0] === accounts[0] ? (
           // admin route
           <React.Fragment>
             {HighlightData ? (
               <React.Fragment>
-                <CarouselComp
-                  txnLoading={txnLoading}
-                  HighlightData={HighlightData}
-                  blockchainFunctions={blockchainFunctions}
-                />
+                {currentAdminScreen === 1 ? (
+                  <CreateHighlights
+                    txnLoading={txnLoading}
+                    blockchainFunctions={blockchainFunctions}
+                  />
+                ) : (
+                  <AdminPage
+                    HighlightData={testData}                  
+                    buttonAction={() => {
+                      setCurrentAdminScreen(1);
+                    }}
+                  />
+                )}
               </React.Fragment>
             ) : currentAdminScreen === 0 ? (
               <EmptyScreen
@@ -228,7 +271,10 @@ const HighlightScreen = () => {
                 }}
               />
             ) : currentAdminScreen === 1 ? (
-              <CreateHighlights blockchainFunctions={blockchainFunctions} />
+              <CreateHighlights
+                txnLoading={txnLoading}
+                blockchainFunctions={blockchainFunctions}
+              />
             ) : (
               <></>
             )}
