@@ -1,0 +1,63 @@
+@use "../../../styles/theme/appTheme.scss";
+
+.adminPage {
+//   height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;  
+  .title {
+    margin-top: 1rem;
+    text-align: center;
+    color: appTheme.$mix-dark-300;
+  }
+  .description {
+    text-align: center;
+    color: appTheme.$mix-dark-100;    
+  }
+  .pollCard {
+    margin: 0.8rem 0.4rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    .cardtitle {
+      text-align: center;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px dashed #d0bde6;
+      color: appTheme.$mix-dark-300;    
+    }
+    .carddescription {
+        text-align: justify;
+        margin-bottom: 1rem;
+        color: appTheme.$mix-dark-100;  
+        font-weight: 600;  
+    }
+    .total{
+        padding-top: 0.6rem;
+        font-size: 1rem;
+        border-top: 1px dashed #d0bde6;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: center;       
+    }
+  }
+  .pollCard:last-child {
+    margin-bottom: 3rem;
+  }
+}
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 880px) {
+  // styles for 2-column layout
+  .adminPage{
+    margin: auto;
+    max-width: 70%;
+  }
+}
+
+// Desktop layout: (≥ 880px)
+@container (min-width: 881px) {
+  // styles for wider screens
+}
