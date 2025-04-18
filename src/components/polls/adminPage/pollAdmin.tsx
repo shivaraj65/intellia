@@ -1,7 +1,9 @@
-import React, { Children, CSSProperties, useEffect, useState } from "react";
+import React from "react";
 import styles from "./pollAdmin.module.scss";
-import { Collapse, CollapseProps, FloatButton, Progress, theme } from "antd";
+import { Collapse, FloatButton, Progress, theme } from "antd";
 import { CaretRightOutlined, PlusOutlined } from "@ant-design/icons";
+import Image from "next/image";
+import { svgConf } from "@/assets/svgConf";
 
 interface Props {
   pollData: any[];
@@ -19,23 +21,25 @@ const PollAdmin = ({ pollData = [], floatingButtonAction }: Props) => {
   };
 
   const collapseDataCreator = (votes: any[], options: any[]) => {
-    let data: any[] = options.map((option, index) => {
-      return {
-        key: option + index,
-        label: (
-          <div className="pollsLabel">
-            <Progress
-              className="flex1"
-              percent={getVotePercentage(votes, index)}
-              showInfo={false}
-            />
-            <span className="last">{votes[index]}</span>
-          </div>
-        ),
-        children: <p>{option}</p>,
-        style: panelStyle,
-      };
-    });
+    console.log("options", options);
+    const data: any[] = options.map((option:string, index:number) => {              
+        return {
+          key: "123"+option + index,
+          label: (
+            <div className="pollsLabel">
+              <Progress
+                className="flex1"
+                percent={getVotePercentage(votes, index)}
+                showInfo={false}
+              />
+              <span className="last">{votes[index]}</span>
+            </div>
+          ),
+          children: <p>{option}</p>,
+          style: panelStyle,
+        };
+      
+    });    
     return data;
   };
 
@@ -55,7 +59,17 @@ const PollAdmin = ({ pollData = [], floatingButtonAction }: Props) => {
       <p className={styles.description + " font2"}>
         Browse through the polls you've published and check performance.
       </p>
-      {pollData.map((poll: any, index: number) => {
+      {pollData && pollData.length === 0 && (
+        <div className={styles.emptyImage}>
+          <Image
+            src={svgConf.general.empty[5].src}
+            alt={svgConf.general.empty[5].src}
+            className={styles.image}
+          />
+          <p className={styles.imageText}>Empty space! Create a poll.</p>
+        </div>
+      )}
+      {pollData && pollData.map((poll: any, index: number) => {
         return (
           <div key={poll.id + index} className={styles.pollCard}>
             <p className={styles.cardtitle + " font2"}>{poll.name}</p>
@@ -68,7 +82,7 @@ const PollAdmin = ({ pollData = [], floatingButtonAction }: Props) => {
               expandIcon={({ isActive }) => (
                 <CaretRightOutlined rotate={isActive ? 90 : 0} />
               )}
-              style={{ background: token.colorBgContainer }}
+              style={{ background: token.colorBgContainer }}              
               items={collapseDataCreator(poll.votes, poll.options)}
             />
             <p className={styles.total + " font2"}>

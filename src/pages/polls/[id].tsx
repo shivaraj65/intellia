@@ -1,7 +1,6 @@
 import PollsScreen from "@/screens/pollsScreen";
 import React from "react";
 
-
 const Polls = () => {
     return(
         <div>

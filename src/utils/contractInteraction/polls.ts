@@ -6,7 +6,20 @@ import { createPublicClient, createWalletClient, custom, http } from "viem";
 import { luksoTestnet } from "viem/chains";
 import { contractAddress, contractABI } from "../abi/polls";
 
-export const contractApi = {
+interface createPollProps {
+  pollId: string;
+  name: string;
+  description: string;
+  options: string[];
+  accounts: `0x${string}`[];
+}
+interface voteProps {
+  pollId: string;
+  optionsIndex: number;
+  accounts: `0x${string}`[];
+}
+
+export const pollsContractApi = {
   requestConnection: async () => {
     const provider = (window as any).lukso as any | undefined;
 
@@ -55,30 +68,71 @@ export const contractApi = {
 
     return { publicClient, walletClient };
   },
-  createPoll: async () => {
+  createPoll: async ({
+    pollId,
+    name,
+    description,
+    options,
+    accounts,
+  }: createPollProps) => {
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient, walletClient } =
+        await pollsContractApi.setupClients();
+      const testResults: any = await publicClient.simulateContract({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: "createPoll",
+        account: accounts[0],
+        args: [pollId, name, description, options],
+      });
+      console.log("testResults-----", testResults);
+      const result = await walletClient.writeContract({
+        ...testResults.request,
+        account: accounts[0],
+      });
+      console.log("test result", result);
+      return result;
     } catch (error: any) {
       console.log(error);
       return "Something went wrong";
     }
   },
-  vote: async () => {
+  vote: async ({ pollId, optionsIndex, accounts }: voteProps) => {
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient, walletClient } =
+        await pollsContractApi.setupClients();
+      const testResults: any = await publicClient.simulateContract({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: "createPoll",
+        account: accounts[0],
+        args: [pollId, optionsIndex],
+      });
+      console.log("testResults-----", testResults);
+      const result = await walletClient.writeContract({
+        ...testResults.request,
+        account: accounts[0],
+      });
+      console.log("test result", result);
+      return result;
     } catch (error: any) {
       console.log(error);
       return "Something went wrong";
     }
   },
-  getPollDataByUser: async () => {
+  getPollDataByUser: async ({
+    profileAccount,
+  }: {
+    profileAccount: `0x${string}`;
+  }) => {
     //fetches only the id of polls
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
       const result: any = await publicClient.readContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "getPollsByUser",
+        args: [profileAccount],
       });
       if (result) {
         //arraay of unique id's - uuid
@@ -91,14 +145,15 @@ export const contractApi = {
       return "Something went wrong";
     }
   },
-  getPollData: async () => {
+  getPollData: async ({ pollId }: { pollId: string }) => {
     //fetches individual poll
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
       const result: any = await publicClient.readContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "getPoll",
+        args: [pollId],
       });
       if (result && Array.isArray(result)) {
         const [a, b, c, d, e] = result as [
@@ -121,13 +176,20 @@ export const contractApi = {
       return "Something went wrong";
     }
   },
-  getUsersVoteStatus: async () => {
+  getUsersVoteStatus: async ({
+    pollId,
+    accounts,
+  }: {
+    pollId: string;
+    accounts: `0x${string}`[];
+  }) => {
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
       const result: any = await publicClient.readContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "getUserVote",
+        args: [pollId, accounts[0]],
       });
       if (result && Array.isArray(result)) {
         const [x, y] = result as [boolean, number];
@@ -141,14 +203,15 @@ export const contractApi = {
       return "Something went wrong";
     }
   },
-  getTotalVotes: async () => {
+  getTotalVotes: async ({ pollId }: { pollId: string }) => {
     //get total votes fro a specific poll
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
       const result: any = await publicClient.readContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "getTotalVotes",
+        args: [pollId],
       });
       if (result) {
         return result as number;
@@ -160,13 +223,13 @@ export const contractApi = {
   },
   getStats: async () => {
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
       const result: any = await publicClient.readContract({
         address: contractAddress,
         abi: contractABI,
         functionName: "getTotalPolls",
-      });
-      if (result) {
+      });      
+      if (result !== undefined && result !== null) {               
         return {
           totalPollsCreated: result as number,
         };
@@ -179,7 +242,7 @@ export const contractApi = {
   },
   getTransactionStatus: async (txnHash: any) => {
     try {
-      const { publicClient } = await contractApi.setupClients();
+      const { publicClient } = await pollsContractApi.setupClients();
 
       const result = await publicClient.waitForTransactionReceipt({
         hash: txnHash,
@@ -194,7 +257,3 @@ export const contractApi = {
     }
   },
 };
-
-
-//need to do input configs for all the functions..
-//args for functions

@@ -29,8 +29,8 @@ const NoPollsCreated = ({
         <div className={styles.errorCol1}>
           <div className={styles.imageContainer}>
             <Image
-              src={svgConf.polls[2].src}
-              alt={svgConf.polls[2].name}
+              src={svgConf.general.empty[5].src}
+              alt={svgConf.general.empty[5].name}
               className={styles.image}
             />
           </div>
