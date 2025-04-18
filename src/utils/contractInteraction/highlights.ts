@@ -156,7 +156,7 @@ export const contractApi = {
       return result;
     } catch (error: any) {
       console.log(error);
-      return "Something went wrong while trying to create highlights.";
+      return "Something went wrong";
     }
   },
   createYourHighlight: async ({
@@ -216,7 +216,7 @@ export const contractApi = {
       }
     } catch (error: any) {
       console.log("error", error);
-      return "Something went wrong while reading the highlight.";
+      return "Something went wrong";
     }
     return null;
   },
@@ -233,7 +233,7 @@ export const contractApi = {
       return result;
     } catch (error: any) {
       console.log(error);
-      return "Something went wrong while trying to create highlights.";
+      return "Something went wrong";
     }
   },
 };

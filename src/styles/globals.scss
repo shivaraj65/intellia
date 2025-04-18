@@ -164,7 +164,7 @@
                   }
                 }
               }
-              @container (min-width: 880px) {                
+              @container (min-width: 880px) {
                 .pigeon {
                   display: flex;
                   align-items: center;
@@ -177,6 +177,33 @@
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-collapse {
+  .ant-collapse-item {
+    .ant-collapse-header {
+      padding: 0.5rem;
+      .ant-collapse-header-text {
+        width: 100% !important;
+        .pollsLabel {
+          width: 100% !important;
+          display: flex;
+          gap: 0.2rem;        
+          .flex1 {
+            flex: 2;
+            .ant-progress-bg{
+              background-color: #d0bde6;
+            }
+          }
+          .last {
+            min-width: 40px;
+            text-align: right;
+            font-weight: 600;            
           }
         }
       }
