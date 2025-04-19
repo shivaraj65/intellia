@@ -1,0 +1,108 @@
+@use "../../../styles/theme/appTheme.scss";
+
+.viewPollPage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .pollCard {
+    margin: 1rem 0.4rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    .cardtitle {
+      text-align: center;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.4rem;
+      border-bottom: 1px dashed #d0bde6;
+      color: appTheme.$mix-dark-300;
+    }
+    .carddescription {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: appTheme.$mix-dark-100;
+      font-weight: 600;
+    }
+    .optionsContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1rem 0;
+      .optionWrapper {
+        position: relative;
+        padding: 0.5rem 1rem;
+        overflow: hidden;
+        border-radius: 1rem;
+        border: 1px solid #d0bde6;
+        cursor: pointer;
+        .optionBackground {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          border-radius: 1rem;
+          background-color: #d0bde6;
+          z-index: 1;
+          transition: width 0.3s ease;
+        }
+        .userSelectedOptBg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          border-radius: 1rem;
+          background-color: #9d79d0;
+          animation: pulseWave 3s ease-in-out infinite;
+          transition: width 0.3s ease;
+          z-index: 1;
+        }
+        .optionText {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-right: 8px;
+          font-weight: 600;
+          letter-spacing: 0.05rem;
+        }
+        @keyframes pulseWave {
+          0% {
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 0.9;
+          }
+          100% {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+    .total {
+      text-align: center;
+    }
+  }
+}
+
+
+// Two-column layout: Small tablets and up (≥ 433px)
+@container (min-width: 433px) and (max-width: 880px) {
+    // styles for 2-column layout
+    .viewPollPage {
+      margin: auto;
+      max-width: 70%;
+    }
+  }
+  
+  // Desktop layout: (≥ 880px)
+  @container (min-width: 881px) {
+    // styles for wider screens
+    .viewPollPage {
+        margin: auto;
+        max-width: 70%;
+      }
+  }

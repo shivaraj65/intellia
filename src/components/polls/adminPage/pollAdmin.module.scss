@@ -1,11 +1,11 @@
 @use "../../../styles/theme/appTheme.scss";
 
 .adminPage {
-//   height: 100%;
+  //   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;  
+  gap: 0.8rem;
   .title {
     margin-top: 1rem;
     text-align: center;
@@ -13,20 +13,20 @@
   }
   .description {
     text-align: center;
-    color: appTheme.$mix-dark-100;    
+    color: appTheme.$mix-dark-100;
   }
-  .emptyImage{
+  .emptyImage {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     margin-top: 2rem;
-    .image{
+    .image {
       width: 80%;
-      height: auto;            
+      height: auto;
     }
-    .imageText{
+    .imageText {
       font-size: 1.2rem;
       color: appTheme.$mix-dark-600;
     }
@@ -41,22 +41,27 @@
       padding-bottom: 0.4rem;
       margin-bottom: 0.4rem;
       border-bottom: 1px dashed #d0bde6;
-      color: appTheme.$mix-dark-300;    
+      color: appTheme.$mix-dark-300;
     }
     .carddescription {
-        text-align: justify;
-        margin-bottom: 1rem;
-        color: appTheme.$mix-dark-100;  
-        font-weight: 600;  
+      text-align: justify;
+      margin-bottom: 1rem;
+      color: appTheme.$mix-dark-100;
+      font-weight: 600;
     }
-    .total{
-        padding-top: 0.6rem;
-        font-size: 1rem;
-        border-top: 1px dashed #d0bde6;
+    .footerWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.6rem;
+      font-size: 1rem;
+      border-top: 1px dashed #d0bde6;
+      .total {
         display: flex;
         align-items: center;
         gap: 1rem;
-        justify-content: center;       
+        justify-content: center;
+      }
     }
   }
   .pollCard:last-child {
@@ -67,7 +72,7 @@
 // Two-column layout: Small tablets and up (≥ 433px)
 @container (min-width: 433px) and (max-width: 880px) {
   // styles for 2-column layout
-  .adminPage{
+  .adminPage {
     margin: auto;
     max-width: 70%;
   }
@@ -76,4 +81,8 @@
 // Desktop layout: (≥ 880px)
 @container (min-width: 881px) {
   // styles for wider screens
+  .adminPage {
+    margin: auto;
+    max-width: 70%;
+  }
 }

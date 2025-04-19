@@ -12,42 +12,49 @@ import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import PollAdmin from "@/components/polls/adminPage/pollAdmin";
 import { pollsContractApi } from "@/utils/contractInteraction/polls";
 import { v4 as uuidv4 } from "uuid";
+import ViewPoll from "@/components/polls/viewSpecificPoll/viewSpecificPoll";
+import { useRouter } from "next/router";
 
 const { TextArea } = Input;
 
-// const mocPollData = [
-//   {
-//     name: "Team Lunch Poll",
-//     description: "What should we have for the team lunch this Friday?",
-//     options: ["Pizza 🍕", "Sushi 🍣", "", "", ""],
-//     votes: [0, 0, 0, 0, 0],
-//     creator: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
-//   },
-//   {
-//     name: "Favorite Programming Language",
-//     description:
-//       "Help us decide the most loved programming language of the year!",
-//     options: ["JavaScript", "Python", "Go", "Rust"],
-//     votes: [18, 25, 7, 10],
-//     creator: "alice_dev",
-//   },
-//   {
-//     name: "Team Outing Preference",
-//     description: "Vote for your favorite type of team outing activity.",
-//     options: ["Bowling", "Escape Room", "Picnic", "Cooking Class"],
-//     votes: [12, 9, 15, 4],
-//     creator: "team_hr",
-//   },
-//   {
-//     name: "Next Book Club Pick",
-//     description: "Choose the book you'd love to read next month!",
-//     options: ["1984", "Sapiens", "The Alchemist"],
-//     votes: [8, 14, 11],
-//     creator: "book_lover22",
-//   },
-// ];
+const mocPollData = [
+  {
+    name: "Team Lunch Poll",
+    description: "What should we have for the team lunch this Friday?",
+    options: ["Pizza 🍕", "Sushi 🍣", "", "", ""],
+    votes: [0, 0, 0, 0, 0],
+    creator: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
+  },
+  {
+    name: "Favorite Programming Language",
+    description:
+      "Help us decide the most loved programming language of the year!",
+    options: ["JavaScript", "Python", "Go", "Rust"],
+    votes: [18, 25, 7, 10],
+    creator: "alice_dev",
+  },
+  {
+    name: "Team Outing Preference",
+    description: "Vote for your favorite type of team outing activity.",
+    options: ["Bowling", "Escape Room", "Picnic", "Cooking Class"],
+    votes: [12, 9, 15, 4],
+    creator: "team_hr",
+  },
+  {
+    name: "Next Book Club Pick",
+    description: "Choose the book you'd love to read next month!",
+    options: ["1984", "Sapiens", "The Alchemist"],
+    votes: [8, 14, 11],
+    creator: "book_lover22",
+  },
+];
 
 const PollsScreen = () => {
+  const router = useRouter();
+  const rawId = router.query.id;
+  const pId = Array.isArray(rawId) ? rawId[0] : rawId;
+  const pollIdNum = pId ? parseInt(pId, 10) : null;
+
   const { message: antdMessage } = App.useApp();
 
   const accounts = useSelector((state: RootState) => state.upProvider.accounts);
@@ -60,7 +67,6 @@ const PollsScreen = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [txnLoading, setTxnLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  
 
   //create modal states.
   type CreatePollData = {
@@ -86,9 +92,11 @@ const PollsScreen = () => {
   const [userPollIds, setUserPollIds] = useState<string[]>([]);
   //all polls data
   const [allPollsData, setAllPollsData] = useState<any[]>([]);
+  //user's voted status for poll
+  const [isUserVoted, setIsUserVoted] = useState<any>(null);
 
   //for a specific poll - for users - /[id route spec]
-  // const [pollData, setPollData] = useState<any>(null);
+  const [pollData, setPollData] = useState<any>(null);
 
   const [txnHash, setTxnHash] = useState<any>(null);
 
@@ -133,6 +141,8 @@ const PollsScreen = () => {
           "Waits for 1 block confirmation, then returns the transaction receipt.",
       });
       await blockchainFunctions.checkTxnStatus(data);
+      const res = await blockchainFunctions.isUserVoted(pollId);
+      setIsUserVoted(res);
       setTxnLoading(false);
     },
     getUserPolls: async () => {
@@ -228,6 +238,34 @@ const PollsScreen = () => {
     blockchainFunctions.getUserPolls();
   }, [accounts, contextAccounts]);
 
+  useEffect(() => {
+    (async () => {
+      if (
+        pollIdNum &&
+        userPollIds.length > 0 &&
+        pollIdNum < userPollIds.length
+      ) {
+        //fethc the specific pollData and set it to state
+        const result: any = await blockchainFunctions.getPollData(
+          userPollIds[pollIdNum]
+        );
+        // Convert BigInt fields safely (like votes)
+        const cleaned = {
+          ...result,
+          votes: result.votes.map((v: bigint | string) => Number(v)),
+        };
+        setPollData(cleaned);
+      }
+    })();
+  }, [accounts, contextAccounts, pollIdNum, userPollIds]);
+
+  useEffect(() => {
+    if (pollData) {
+      const result = blockchainFunctions.isUserVoted(pollData.id);
+      setIsUserVoted(result);
+    }
+  }, [accounts, contextAccounts, pollData]);
+
   //fetch the pollData for every POLL ID's
   useEffect(() => {
     if (userPollIds.length > 0) {
@@ -250,8 +288,7 @@ const PollsScreen = () => {
         setAllPollsData([...updateData]);
       }
     }
-    //refactore here..
-    setAllPollsData(updateData);
+    setAllPollsData([...updateData]);
   };
 
   const DrawerContents = (): React.ReactNode => {
@@ -298,10 +335,25 @@ const PollsScreen = () => {
   };
 
   const handleOk = () => {
+    setCreateData({
+      id: "",
+      title: "",
+      question: "",
+      options: ["", "", "", "", ""],
+      optionsCount: 2,
+    });
+
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
+    setCreateData({
+      id: "",
+      title: "",
+      question: "",
+      options: ["", "", "", "", ""],
+      optionsCount: 2,
+    });
     setIsModalOpen(false);
   };
 
@@ -366,6 +418,25 @@ const PollsScreen = () => {
               )}
             </span>
           )} */}
+          {/* <h2>Poll ID: {rawId ? rawId : "No ID"}</h2> */}
+          {/* <ViewPoll
+            loading={txnLoading}
+            pollData={{
+              name: "Team Lunch Poll",
+              description:
+                "What should we have for the team lunch this Friday?",
+              options: ["Pizza 🍕", "Sushi 🍣"],
+              votes: [10, 6],
+              creator: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
+            }}
+            isUserVoted={{
+              isvoted: true,
+              option: 1,
+            }}
+            blockchainFunctions={blockchainFunctions}
+          /> */}
+
+          <PollAdmin pollData={mocPollData} floatingButtonAction={showModal} />
 
           {contextAccounts[0] === accounts[0] ? (
             //admin pages...
@@ -389,11 +460,29 @@ const PollsScreen = () => {
               )}
             </React.Fragment>
           ) : (
-            //user pages...
-            //view poll data - scroll window but not auto scroll. [6]
-            //view specific poll data - only.[7]
-            //vote confirmation popup. [8]
-            <>WIP - POLLS!! stay tuned! </>
+            <React.Fragment>
+              {pollIdNum && pollData ? (
+                <ViewPoll
+                  loading={txnLoading}
+                  pollData={pollData}
+                  isUserVoted={isUserVoted}
+                  blockchainFunctions={blockchainFunctions}
+                />
+              ) : (
+                <NoPollsCreated
+                  message={
+                    pollIdNum
+                      ? `Poll is loading up. The ideas are brewing — almost ready to roll!`
+                      : "Hang tight! Poll is warming up behind the scenes. The creator's making final touches — check back shortly!"
+                  }
+                  title={pollIdNum ? "Setting Things Up..." : "Almost There..."}
+                  buttonText={"Make a Poll"}
+                  buttonAction={() => {
+                    showModal();
+                  }}
+                />
+              )}
+            </React.Fragment>
           )}
           {contextAccounts[0] === accounts[0] && (
             <Modal

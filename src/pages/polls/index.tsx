@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import SafeScreen from "@/components/common/safeScreen/safeScreen";
+import styles from "@/styles/pages/polls.module.scss";
 
 const Polls = () => {
   const accounts = useSelector((state: RootState) => state.upProvider.accounts);
@@ -10,7 +11,7 @@ const Polls = () => {
     (state: RootState) => state.upProvider.contextAccounts
   );
   return (
-    <div>
+    <div className={styles.pollsApp}>      
       {accounts &&
       accounts.length > 0 &&
       contextAccounts &&
