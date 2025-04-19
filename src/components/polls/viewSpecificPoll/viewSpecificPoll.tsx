@@ -47,7 +47,7 @@ const ViewPoll = ({
                 key={option + "_" + index}
                 className={styles.optionWrapper}
                 onClick={() => {
-                  if (!isUserVoted.isvoted) {
+                  if (!isUserVoted?.isvoted) {
                     vote(index);
                   } else {
                     antdMessage.open({
@@ -57,10 +57,10 @@ const ViewPoll = ({
                   }
                 }}
               >
-                {isUserVoted.isvoted && (
+                {isUserVoted?.isvoted && (
                   <div
                     className={
-                      isUserVoted.option === index
+                      isUserVoted?.option === index
                         ? styles.userSelectedOptBg
                         : styles.optionBackground
                     }
@@ -70,7 +70,7 @@ const ViewPoll = ({
 
                 <span className={styles.optionText}>
                   {option}
-                  {isUserVoted.isvoted && (
+                  {isUserVoted?.isvoted && (
                     <span className={styles.votePercentage}>
                       {Math.round(percentage)}%
                     </span>

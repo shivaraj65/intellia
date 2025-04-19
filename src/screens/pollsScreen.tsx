@@ -461,7 +461,7 @@ const PollsScreen = () => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {pollIdNum && pollData ? (
+              {pollIdNum && pollData && isUserVoted ? (
                 <ViewPoll
                   loading={txnLoading}
                   pollData={pollData}
@@ -476,10 +476,7 @@ const PollsScreen = () => {
                       : "Hang tight! Poll is warming up behind the scenes. The creator's making final touches — check back shortly!"
                   }
                   title={pollIdNum ? "Setting Things Up..." : "Almost There..."}
-                  buttonText={"Make a Poll"}
-                  buttonAction={() => {
-                    showModal();
-                  }}
+                  buttonText={""}                  
                 />
               )}
             </React.Fragment>
