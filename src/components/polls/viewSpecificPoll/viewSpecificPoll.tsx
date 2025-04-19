@@ -81,7 +81,7 @@ const ViewPoll = ({
           })}
         </div>
         <p className={styles.total + " font1"}>
-          Total Votes - <b>{getTotalVotes()}</b>
+          Total Votes:  <b>{getTotalVotes()}</b>
         </p>
       </div>
     </div>
