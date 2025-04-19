@@ -17,37 +17,37 @@ import { useRouter } from "next/router";
 
 const { TextArea } = Input;
 
-const mocPollData = [
-  {
-    name: "Team Lunch Poll",
-    description: "What should we have for the team lunch this Friday?",
-    options: ["Pizza 🍕", "Sushi 🍣", "", "", ""],
-    votes: [0, 0, 0, 0, 0],
-    creator: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
-  },
-  {
-    name: "Favorite Programming Language",
-    description:
-      "Help us decide the most loved programming language of the year!",
-    options: ["JavaScript", "Python", "Go", "Rust"],
-    votes: [18, 25, 7, 10],
-    creator: "alice_dev",
-  },
-  {
-    name: "Team Outing Preference",
-    description: "Vote for your favorite type of team outing activity.",
-    options: ["Bowling", "Escape Room", "Picnic", "Cooking Class"],
-    votes: [12, 9, 15, 4],
-    creator: "team_hr",
-  },
-  {
-    name: "Next Book Club Pick",
-    description: "Choose the book you'd love to read next month!",
-    options: ["1984", "Sapiens", "The Alchemist"],
-    votes: [8, 14, 11],
-    creator: "book_lover22",
-  },
-];
+// const mocPollData = [
+//   {
+//     name: "Team Lunch Poll",
+//     description: "What should we have for the team lunch this Friday?",
+//     options: ["Pizza 🍕", "Sushi 🍣", "", "", ""],
+//     votes: [0, 0, 0, 0, 0],
+//     creator: "0xA3f4d6098fcF44CD9273B5323f43be13C45966b7",
+//   },
+//   {
+//     name: "Favorite Programming Language",
+//     description:
+//       "Help us decide the most loved programming language of the year!",
+//     options: ["JavaScript", "Python", "Go", "Rust"],
+//     votes: [18, 25, 7, 10],
+//     creator: "alice_dev",
+//   },
+//   {
+//     name: "Team Outing Preference",
+//     description: "Vote for your favorite type of team outing activity.",
+//     options: ["Bowling", "Escape Room", "Picnic", "Cooking Class"],
+//     votes: [12, 9, 15, 4],
+//     creator: "team_hr",
+//   },
+//   {
+//     name: "Next Book Club Pick",
+//     description: "Choose the book you'd love to read next month!",
+//     options: ["1984", "Sapiens", "The Alchemist"],
+//     votes: [8, 14, 11],
+//     creator: "book_lover22",
+//   },
+// ];
 
 const PollsScreen = () => {
   const router = useRouter();
@@ -436,7 +436,7 @@ const PollsScreen = () => {
             blockchainFunctions={blockchainFunctions}
           /> */}
 
-          <PollAdmin pollData={mocPollData} floatingButtonAction={showModal} />
+          {/* <PollAdmin pollData={mocPollData} floatingButtonAction={showModal} /> */}
 
           {contextAccounts[0] === accounts[0] ? (
             //admin pages...
