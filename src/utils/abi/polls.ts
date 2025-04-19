@@ -1,6 +1,5 @@
 // constants/contract.ts
 
-//dummy contract address
 export const contractAddress = '0x6d854cce450bcc3ed8838ead7182c64a3419e4d7';
 
 export const contractABI = [
