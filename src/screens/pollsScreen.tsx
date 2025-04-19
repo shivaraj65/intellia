@@ -142,6 +142,17 @@ const PollsScreen = () => {
       });
       await blockchainFunctions.checkTxnStatus(data);
       const res = await blockchainFunctions.isUserVoted(pollId);
+      if (pollIdNum) {
+        const result: any = await blockchainFunctions.getPollData(
+          userPollIds[pollIdNum]
+        );
+        // Convert BigInt fields safely (like votes)
+        const cleaned = {
+          ...result,
+          votes: result.votes.map((v: bigint | string) => Number(v)),
+        };
+        setPollData({ ...cleaned });
+      }
       setIsUserVoted({ ...res });
       setTxnLoading(false);
     },
@@ -261,8 +272,10 @@ const PollsScreen = () => {
 
   useEffect(() => {
     if (pollData) {
-      const result = blockchainFunctions.isUserVoted(pollData.id);
-      setIsUserVoted({ ...result });
+      (async () => {
+        const result = await blockchainFunctions.isUserVoted(pollData.id);
+        setIsUserVoted({ ...result });
+      })();
     }
   }, [accounts, contextAccounts, pollData]);
 
@@ -401,14 +414,14 @@ const PollsScreen = () => {
         <React.Fragment>
           {/* {contextAccounts && <p>{contextAccounts[0]}</p>}
           {accounts && <p>{accounts[0]}</p>} */}
-          {/* {pollData && (
+          {/* {test && (
             <span>
-              {typeof pollData === "string" || typeof pollData === "number" ? (
-                pollData
+              {typeof test === "string" || typeof test === "number" ? (
+                test
               ) : (
                 <pre>
                   {JSON.stringify(
-                    pollData,
+                    test,
                     (_key, value) =>
                       typeof value === "bigint" ? value.toString() : value,
                     2
