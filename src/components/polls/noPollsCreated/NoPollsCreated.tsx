@@ -1,4 +1,3 @@
-
 /**
  * component for the empty DApp
  * should use when the Dapp is not configured / available
@@ -14,7 +13,7 @@ interface props {
   message: string;
   title: string;
   buttonText: string;
-  buttonAction: () => void;
+  buttonAction?: () => void;
 }
 
 const NoPollsCreated = ({
@@ -41,18 +40,20 @@ const NoPollsCreated = ({
             <div className={`${styles.errorCard} font2`}>
               <p className={styles.displayContentText}>{message}</p>
             </div>
-            <div className={styles.btnContainer}>
-              <Button
-                className={styles.actionBtn + " font2"}
-                type={"primary"}
-                size="large"
-                block
-                shape="round"
-                onClick={buttonAction}
-              >
-                {buttonText}
-              </Button>
-            </div>
+            {buttonText !== "" && (
+              <div className={styles.btnContainer}>
+                <Button
+                  className={styles.actionBtn + " font2"}
+                  type={"primary"}
+                  size="large"
+                  block
+                  shape="round"
+                  onClick={buttonAction}
+                >
+                  {buttonText}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
