@@ -104,7 +104,7 @@ export const pollsContractApi = {
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,
-        functionName: "createPoll",
+        functionName: "vote",
         account: accounts[0],
         args: [pollId, optionsIndex],
       });
