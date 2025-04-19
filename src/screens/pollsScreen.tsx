@@ -142,7 +142,7 @@ const PollsScreen = () => {
       });
       await blockchainFunctions.checkTxnStatus(data);
       const res = await blockchainFunctions.isUserVoted(pollId);
-      setIsUserVoted(res);
+      setIsUserVoted({ ...res });
       setTxnLoading(false);
     },
     getUserPolls: async () => {
@@ -262,7 +262,7 @@ const PollsScreen = () => {
   useEffect(() => {
     if (pollData) {
       const result = blockchainFunctions.isUserVoted(pollData.id);
-      setIsUserVoted(result);
+      setIsUserVoted({ ...result });
     }
   }, [accounts, contextAccounts, pollData]);
 
@@ -401,15 +401,14 @@ const PollsScreen = () => {
         <React.Fragment>
           {/* {contextAccounts && <p>{contextAccounts[0]}</p>}
           {accounts && <p>{accounts[0]}</p>} */}
-          {/* {allPollsData && (
+          {/* {pollData && (
             <span>
-              {typeof allPollsData === "string" ||
-              typeof allPollsData === "number" ? (
-                allPollsData
+              {typeof pollData === "string" || typeof pollData === "number" ? (
+                pollData
               ) : (
                 <pre>
                   {JSON.stringify(
-                    allPollsData,
+                    pollData,
                     (_key, value) =>
                       typeof value === "bigint" ? value.toString() : value,
                     2
@@ -476,7 +475,7 @@ const PollsScreen = () => {
                       : "Hang tight! Poll is warming up behind the scenes. The creator's making final touches — check back shortly!"
                   }
                   title={pollIdNum ? "Setting Things Up..." : "Almost There..."}
-                  buttonText={""}                  
+                  buttonText={""}
                 />
               )}
             </React.Fragment>
