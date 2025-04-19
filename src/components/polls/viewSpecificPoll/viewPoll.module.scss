@@ -10,6 +10,7 @@
   .pollCard {
     // margin: 1rem 0.4rem;
     margin: auto;
+    width: 100%;
     padding: 1rem;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -106,6 +107,6 @@
     // styles for wider screens
     .viewPollPage {
         margin: auto;
-        max-width: 70%;
+        max-width: 65%;
       }
   }
