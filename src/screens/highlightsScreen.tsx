@@ -119,6 +119,7 @@ const HighlightScreen = () => {
           "Waits for 1 block confirmation, then returns the transaction receipt.",
       });
       await blockchainFunctions.checkTxnStatus(data);
+      await blockchainFunctions.getHighlights();
       setTxnLoading(false);
     },
     addMessage: async (message: string, icon: string) => {
@@ -175,7 +176,7 @@ const HighlightScreen = () => {
                   styles.label + " " + styles["secondaryText"] + " font1"
                 }
               >
-                👤 Total Users
+                🪄 Moments Captured
               </span>
               <span className={styles.value + " font2"}>
                 {appStats?.totalUsers}

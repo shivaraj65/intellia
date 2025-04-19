@@ -164,6 +164,7 @@ export const pollsContractApi = {
           string
         ];
         return {
+          id:pollId,
           name: a,
           description: b,
           options: c,
