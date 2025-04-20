@@ -496,7 +496,7 @@ const PollsScreen = () => {
           {contextAccounts[0] === accounts[0] && (
             <Modal
               className={styles.createPoll}
-              title="Create a Highlight"
+              title="Create a Poll"
               style={{ top: 20 }}
               open={isModalOpen}
               onOk={handleOk}

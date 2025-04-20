@@ -1,10 +1,10 @@
 import React from "react";
-// import ReviewScreen from "@/screens/reviewsScreen";
+import ReviewScreen from "@/screens/reviewsScreen";
 
 const Reviews = () => {
     return(
         <div>
-            {/* <ReviewScreen/> */}
+            <ReviewScreen/>
         </div>
     )
 }
