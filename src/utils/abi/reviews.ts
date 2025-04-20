@@ -1,23 +1,38 @@
 // constants/contract.ts
 
 //dummy contract address
-export const contractAddress = '0x358AA13c52544ECCEF6B0ADD0f801012ADAD5eE3';
+export const contractAddress = '0xd7753c8d502a5e8c160c7f3bf8acb0cb0b5cb9a4';
 
 export const contractABI = [
 	{
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "name",
+				"name": "topicId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "title",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
 				"name": "description",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "imageURL",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "externalLink",
+				"type": "string"
 			}
 		],
-		"name": "addCampaign",
+		"name": "createReviewTopic",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -25,13 +40,26 @@ export const contractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "campaignId",
-				"type": "address"
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			}
+		],
+		"name": "deleteTopic",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "messageText",
+				"name": "message",
 				"type": "string"
 			},
 			{
@@ -45,29 +73,133 @@ export const contractABI = [
 				"type": "string"
 			}
 		],
-		"name": "addMessage",
+		"name": "leaveReview",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "getAppMetrics",
+		"outputs": [
 			{
-				"internalType": "address",
-				"name": "campaignId",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "totalCreatedTopics",
+				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "messageIndex",
+				"name": "totalRegisteredUsers",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalSubmittedReviews",
 				"type": "uint256"
 			}
 		],
-		"name": "getCampaignMessage",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getMyTopicIds",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			}
+		],
+		"name": "getTopicDetails",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "id",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "imageURL",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "externalLink",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "isDeleted",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reviewCount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			}
+		],
+		"name": "getTopicOwner",
 		"outputs": [
 			{
 				"internalType": "address",
-				"name": "user",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getTopicReview",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "reviewer",
 				"type": "address"
 			},
 			{
@@ -92,26 +224,60 @@ export const contractABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			},
+			{
 				"internalType": "address",
-				"name": "campaignId",
+				"name": "user",
 				"type": "address"
 			}
 		],
-		"name": "getCampaignMeta",
+		"name": "hasReviewed",
 		"outputs": [
 			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			},
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalReviews",
+		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "totalMessages",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalTopics",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalUsers",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
 				"type": "uint256"
 			}
 		],
