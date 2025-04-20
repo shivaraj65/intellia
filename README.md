@@ -100,7 +100,7 @@ Ask questions and let others rate and review their experience, product, or inter
 | ---------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | Polls      | 0x6d854cce450bcc3ed8838ead7182c64a3419e4d7 | [View on LUKSO](https://explorer.execution.testnet.lukso.network/address/0x6D854CCe450bcc3Ed8838EAD7182c64A3419e4D7?tab=txs) |
 | Highlights | 0x1b8ee7f9869084da797fde314eb8db5537614f8f | [View on LUKSO](https://explorer.execution.testnet.lukso.network/address/0x1B8Ee7f9869084Da797fde314eb8Db5537614F8F)         |
-| Reviews    | 0xd7753c8d502a5e8c160c7f3bf8acb0cb0b5cb9a4 | [View on LUKSO](https://explorer.execution.testnet.lukso.network/address/0xD7753C8d502A5E8c160C7f3Bf8ACB0cb0b5cb9a4)         |
+| Reviews    | 0x2577d3c31fab37440770142009e587eb88e18214 | [View on LUKSO](https://explorer.execution.testnet.lukso.network/address/0x2577d3c31fab37440770142009e587eb88e18214)         |
 
 ---
 

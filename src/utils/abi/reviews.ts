@@ -1,7 +1,7 @@
 // constants/contract.ts
 
 //dummy contract address
-export const contractAddress = '0xd7753c8d502a5e8c160c7f3bf8acb0cb0b5cb9a4';
+export const contractAddress = '0x2577d3c31fab37440770142009e587eb88e18214';
 
 export const contractABI = [
 	{
@@ -51,34 +51,6 @@ export const contractABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "topicId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "message",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "rating",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "timestamp",
-				"type": "string"
-			}
-		],
-		"name": "leaveReview",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "getAppMetrics",
 		"outputs": [
@@ -102,7 +74,13 @@ export const contractABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
 		"name": "getMyTopicIds",
 		"outputs": [
 			{
@@ -243,6 +221,34 @@ export const contractABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "topicId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "message",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "rating",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "timestamp",
+				"type": "string"
+			}
+		],
+		"name": "leaveReview",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

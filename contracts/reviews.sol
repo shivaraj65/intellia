@@ -91,9 +91,9 @@ contract ReviewApp {
         return reviewTopics[topicId].hasReviewed[user];
     }
 
-    /// @notice Get all topic IDs created by the caller
-    function getMyTopicIds() external view returns (string[] memory) {
-        return userTopics[msg.sender];
+    /// @notice Get all topic IDs for a given user
+    function getMyTopicIds(address user) external view returns (string[] memory) {
+        return userTopics[user];
     }
 
     /// @notice Get metadata for a topic (only creator can view)
@@ -110,7 +110,7 @@ contract ReviewApp {
             uint256 reviewCount
         )
     {
-        require(topicToOwner[topicId] == msg.sender, "Not your topic");
+        require(reviewTopics[topicId].exists, "Topic does not exist");
         ReviewTopic storage topic = reviewTopics[topicId];
 
         return (
@@ -135,7 +135,7 @@ contract ReviewApp {
             string memory timestamp
         )
     {
-        require(topicToOwner[topicId] == msg.sender, "Not your topic");
+        require(reviewTopics[topicId].exists, "Topic does not exist");
         ReviewTopic storage topic = reviewTopics[topicId];
         require(index < topic.reviewCount, "Invalid review index");
 
