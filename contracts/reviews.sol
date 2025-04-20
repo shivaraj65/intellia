@@ -1,90 +1,170 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-contract CampaignManager {
-    struct Message {
-        address user;
+contract ReviewApp {
+    struct Review {
+        address reviewer;
         string message;
         uint256 rating;
         string timestamp;
     }
 
-    struct Campaign {
-        string name;
+    struct ReviewTopic {
+        string id;
+        string title;
         string description;
-        uint256 messageCount;
-        mapping(uint256 => Message) messages;
+        string imageURL;
+        string externalLink;
+        bool isDeleted;
+        uint256 reviewCount;
+        mapping(uint256 => Review) reviews;
+        mapping(address => bool) hasReviewed;
         bool exists;
     }
 
-    mapping(address => Campaign) private campaigns;
+    mapping(string => ReviewTopic) private reviewTopics;             // topicId => ReviewTopic
+    mapping(string => address) private topicToOwner;                 // topicId => owner
+    mapping(address => string[]) private userTopics;                 // user => topicId[]
 
-    /// @notice Create a new campaign
-    function addCampaign(
-        string calldata name,
-        string calldata description
+    mapping(address => bool) private uniqueUsers;
+
+    uint256 public totalTopics;
+    uint256 public totalUsers;
+    uint256 public totalReviews;
+
+    /// @notice Create a new review topic
+    function createReviewTopic(
+        string calldata topicId,
+        string calldata title,
+        string calldata description,
+        string calldata imageURL,
+        string calldata externalLink
     ) external {
-        require(!campaigns[msg.sender].exists, "Campaign already exists");
+        require(!reviewTopics[topicId].exists, "Topic ID already exists");
 
-        Campaign storage c = campaigns[msg.sender];
-        c.name = name;
-        c.description = description;
-        c.exists = true;
+        ReviewTopic storage topic = reviewTopics[topicId];
+        topic.id = topicId;
+        topic.title = title;
+        topic.description = description;
+        topic.imageURL = imageURL;
+        topic.externalLink = externalLink;
+        topic.exists = true;
+
+        topicToOwner[topicId] = msg.sender;
+        userTopics[msg.sender].push(topicId);
+        totalTopics++;
+
+        if (!uniqueUsers[msg.sender]) {
+            uniqueUsers[msg.sender] = true;
+            totalUsers++;
+        }
     }
 
-    /// @notice Add a message with rating and timestamp
-    function addMessage(
-        address campaignId,
-        string calldata messageText,
+    /// @notice Leave a review on someone's topic
+    function leaveReview(
+        string calldata topicId,
+        string calldata message,
         uint256 rating,
         string calldata timestamp
     ) external {
-        require(campaigns[campaignId].exists, "Campaign not found");
+        require(reviewTopics[topicId].exists, "Review topic does not exist");
+        require(!reviewTopics[topicId].isDeleted, "Topic has been deleted");
+        require(!reviewTopics[topicId].hasReviewed[msg.sender], "Already reviewed");
 
-        Campaign storage c = campaigns[campaignId];
-        uint256 index = c.messageCount;
+        ReviewTopic storage topic = reviewTopics[topicId];
 
-        c.messages[index] = Message({
-            user: msg.sender,
-            message: messageText,
+        topic.reviews[topic.reviewCount] = Review({
+            reviewer: msg.sender,
+            message: message,
             rating: rating,
             timestamp: timestamp
         });
 
-        c.messageCount += 1;
+        topic.reviewCount++;
+        topic.hasReviewed[msg.sender] = true;
+        totalReviews++;
     }
 
-   /// @notice Get metadata of a campaign without any messages
-    function getCampaignMeta(
-        address campaignId
-    ) external view returns (
-        string memory name,
-        string memory description,
-        uint256 totalMessages
-    ) {
-        require(campaigns[campaignId].exists, "Campaign not found");
-
-        Campaign storage c = campaigns[campaignId];
-        return (c.name, c.description, c.messageCount);
+    /// @notice Check if a user has reviewed a topic
+    function hasReviewed(string calldata topicId, address user) external view returns (bool) {
+        require(reviewTopics[topicId].exists, "Topic does not exist");
+        return reviewTopics[topicId].hasReviewed[user];
     }
 
-    /// @notice Get a specific message from a campaign by index
-    function getCampaignMessage(
-        address campaignId,
-        uint256 messageIndex
-    ) external view returns (
-        address user,
-        string memory message,
-        uint256 rating,
-        string memory timestamp
-    ) {
-        require(campaigns[campaignId].exists, "Campaign not found");
-
-        Campaign storage c = campaigns[campaignId];
-        require(messageIndex < c.messageCount, "Invalid message index");
-
-        Message storage m = c.messages[messageIndex];
-        return (m.user, m.message, m.rating, m.timestamp);
+    /// @notice Get all topic IDs created by the caller
+    function getMyTopicIds() external view returns (string[] memory) {
+        return userTopics[msg.sender];
     }
 
+    /// @notice Get metadata for a topic (only creator can view)
+    function getTopicDetails(string calldata topicId)
+        external
+        view
+        returns (
+            string memory id,
+            string memory title,
+            string memory description,
+            string memory imageURL,
+            string memory externalLink,
+            bool isDeleted,
+            uint256 reviewCount
+        )
+    {
+        require(topicToOwner[topicId] == msg.sender, "Not your topic");
+        ReviewTopic storage topic = reviewTopics[topicId];
+
+        return (
+            topic.id,
+            topic.title,
+            topic.description,
+            topic.imageURL,
+            topic.externalLink,
+            topic.isDeleted,
+            topic.reviewCount
+        );
+    }
+
+    /// @notice Get a specific review from your topic
+    function getTopicReview(string calldata topicId, uint256 index)
+        external
+        view
+        returns (
+            address reviewer,
+            string memory message,
+            uint256 rating,
+            string memory timestamp
+        )
+    {
+        require(topicToOwner[topicId] == msg.sender, "Not your topic");
+        ReviewTopic storage topic = reviewTopics[topicId];
+        require(index < topic.reviewCount, "Invalid review index");
+
+        Review storage r = topic.reviews[index];
+        return (r.reviewer, r.message, r.rating, r.timestamp);
+    }
+
+    /// @notice Soft delete your topic
+    function deleteTopic(string calldata topicId) external {
+        require(topicToOwner[topicId] == msg.sender, "Not your topic");
+        reviewTopics[topicId].isDeleted = true;
+    }
+
+    /// @notice Get app-level metrics
+    function getAppMetrics()
+        external
+        view
+        returns (
+            uint256 totalCreatedTopics,
+            uint256 totalRegisteredUsers,
+            uint256 totalSubmittedReviews
+        )
+    {
+        return (totalTopics, totalUsers, totalReviews);
+    }
+
+    /// @notice Get owner of a topic
+    function getTopicOwner(string calldata topicId) external view returns (address) {
+        require(reviewTopics[topicId].exists, "Topic not found");
+        return topicToOwner[topicId];
+    }
 }
