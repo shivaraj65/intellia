@@ -8,7 +8,8 @@ import { useRouter } from "next/router";
 import NoReviewsCreated from "@/components/reviews/noReviewsCreated/noReviewsCreated";
 import AdminPage from "@/components/reviews/adminPage/adminPage";
 import { reviewsContractApi } from "@/utils/contractInteraction/reviews";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+import View from "@/components/reviews/viewSpecificReview/view";
 
 const { TextArea } = Input;
 
@@ -72,15 +73,16 @@ const ReviewScreen = () => {
   });
   //children states...
   const [appStats, setappStats] = useState<any>(null);
+
+  //admin flow states...
   //Arr of current users created reviews as ID's..
   const [userReviewsID, setUserReviewsID] = useState<any>(null);
   //Arr of users all review data
   const [allReviewData, setAllReviewData] = useState<any>(null);
 
+  //user flow states...
   //view screens data
   const [viewReviewData, setViewReviewData] = useState<any>(null);
-  //user reviewed state
-  const [isUserReviewed, setIsUserReviewed] = useState<boolean>(false);
 
   const blockchainFunctions = {
     create: async (
@@ -90,13 +92,14 @@ const ReviewScreen = () => {
       externalLink: string
     ) => {
       setTxnLoading(true);
+      const id = userReviewsID.length;
       const data = await reviewsContractApi.create({
-        topicId: await uuidv4(),
+        topicId: id,
         title: name,
-        description,
-        imageURL,
-        externalLink,
-        accounts,
+        description: description,
+        imageURL: imageURL,
+        externalLink: externalLink,
+        accounts: accounts,
       });
       setTxnHash(data);
       antdMessage.open({
@@ -106,7 +109,10 @@ const ReviewScreen = () => {
       });
       console.log(txnHash); //dummy
       await blockchainFunctions.checkTxnStatus(data);
-      await blockchainFunctions.getHisReviewIds();
+      const result: any = await blockchainFunctions.getHisReviewIds();
+      if (result) {
+        setUserReviewsID([...result]);
+      }
       setTxnLoading(false);
       handleCancel();
     },
@@ -131,7 +137,8 @@ const ReviewScreen = () => {
           "Waits for 1 block confirmation, then returns the transaction receipt.",
       });
       await blockchainFunctions.checkTxnStatus(data);
-      await blockchainFunctions.getHisReviewMetadata(topicId);
+      const metadata = await blockchainFunctions.getHisReviewMetadata(topicId);
+      setViewReviewData(metadata);
       setTxnLoading(false);
     },
     didIReview: async (topicId: string) => {
@@ -155,6 +162,7 @@ const ReviewScreen = () => {
       } else {
         return data;
       }
+      return null;
     },
     getHisReviewMetadata: async (topicId: string) => {
       const data = await reviewsContractApi.getHisReviewMetadata(topicId);
@@ -205,22 +213,57 @@ const ReviewScreen = () => {
       }
       setTxnHash(null);
     },
-    linterEscaper:()=>{
-      console.log(userReviewsID);
-      setUserReviewsID(null);
-      setAllReviewData(null);
-      setViewReviewData(null);
-      setIsUserReviewed(false);
-    }
+    // linterEscaper:()=>{
+    //   console.log(userReviewsID);
+    //   setUserReviewsID(null);
+    //   setAllReviewData(null);
+    //   setViewReviewData(null);
+    //   setIsUserReviewed(false);
+    // }
   };
 
   useEffect(() => {
     // if(isDrawerOpen){
     blockchainFunctions.getStats();
     // }
-  }, [accounts, contextAccounts, isDrawerOpen]);
+  }, [accounts[0], contextAccounts[0], isDrawerOpen]);
 
-  useEffect(() => {}, [accounts, contextAccounts]);
+  useEffect(() => {
+    if (accounts[0] === contextAccounts[0] && userReviewsID === null) {
+      (async () => {
+        const result: any = await blockchainFunctions.getHisReviewIds();
+        if (result) {
+          setUserReviewsID([...result]);
+        }
+      })();
+    }
+  }, [accounts[0], contextAccounts[0]]);
+
+  useEffect(() => {
+    if (accounts[0] === contextAccounts[0] && userReviewsID !== null) {
+      (async () => {
+        const tempArr = [];
+        for (let i = 0; i < userReviewsID.length; i++) {
+          const result = await blockchainFunctions.getHisReviewMetadata(
+            userReviewsID[i]
+          );
+          tempArr.push(result);
+        }
+        setAllReviewData([...tempArr]);
+      })();
+    }
+  }, [accounts, contextAccounts, userReviewsID]);
+
+  useEffect(() => {
+    if (accounts[0] !== contextAccounts[0] && pollIdNum) {
+      (async () => {
+        const res = await blockchainFunctions.getHisReviewMetadata(
+          pollIdNum.toString()
+        );
+        setViewReviewData(res);
+      })();
+    }
+  }, [accounts[0], contextAccounts[0]]);
 
   const DrawerContents = (): React.ReactNode => {
     return (
@@ -339,31 +382,45 @@ const ReviewScreen = () => {
 
   return (
     <div className={styles.reviewComponent}>
-      {" "}
       <AppLayout
         isDrawerOpen={isDrawerOpen}
         setIsDrawerOpen={setIsDrawerOpen}
         drawerComtent={<DrawerContents />}
       >
         {/* {contextAccounts && <p>{contextAccounts[0]}</p>}
-                  {accounts && <p>{accounts[0]}</p>} */}
-        {/* {txnHash && (
-                    <span>
-                      {typeof txnHash === "string" || typeof txnHash === "number" ? (
-                        txnHash
-                      ) : (
-                        <pre>
-                          {JSON.stringify(
-                            txnHash,
-                            (_key, value) =>
-                              typeof value === "bigint" ? value.toString() : value,
-                            2
-                          )}
-                        </pre>
-                      )}
-                    </span>
-                  )} */}
-        {/* <AdminPage reviewsData={MockData} floatingButtonAction={showModal} /> */}
+        {accounts && <p>{accounts[0]}</p>} */}
+
+        {/* {test && (
+          <span>
+            {typeof test === "string" || typeof test === "number" ? (
+              test
+            ) : (
+              <pre>
+                {JSON.stringify(
+                  test,
+                  (_key, value) =>
+                    typeof value === "bigint" ? value.toString() : value,
+                  2
+                )}
+              </pre>
+            )}
+          </span>
+        )}         */}
+        {/* <View
+          data={{
+            id: "rev-001",
+            name: "Product Feedback: Aurora Headphones",
+            description:
+              "Collecting honest opinions and improvement ideas on the new Aurora wireless headphones.",
+            imageURL:
+              "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
+            externalLink: "https://example.com/aurora-headphones-info",
+            isDeleted: false,
+            reviewCount: 2,
+          }}
+          blockchainFunctions={blockchainFunctions}
+          txnLoading={txnLoading}
+        /> */}
 
         {contextAccounts[0] === accounts[0] ? (
           //admin pages...
@@ -372,6 +429,7 @@ const ReviewScreen = () => {
               <AdminPage
                 reviewsData={allReviewData}
                 floatingButtonAction={showModal}
+                blockchainFunctions={blockchainFunctions}
               />
             ) : (
               <NoReviewsCreated
@@ -386,8 +444,12 @@ const ReviewScreen = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {pollIdNum && viewReviewData && isUserReviewed ? (
-              <>view specific review screen</>
+            {pollIdNum && viewReviewData ? (
+              <View
+                data={viewReviewData}
+                blockchainFunctions={blockchainFunctions}
+                txnLoading={txnLoading}
+              />
             ) : (
               <NoReviewsCreated
                 message={
@@ -487,7 +549,12 @@ const ReviewScreen = () => {
                   shape="round"
                   onClick={async () => {
                     if (validateCreate()) {
-                      //call the create api
+                      blockchainFunctions.create(
+                        createData.name,
+                        createData.description,
+                        createData.imageURL,
+                        createData.externalLink
+                      );
                     }
                   }}
                 >

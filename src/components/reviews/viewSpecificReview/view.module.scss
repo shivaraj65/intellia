@@ -1,39 +1,13 @@
 @use "../../../styles/theme/appTheme.scss";
-
-.adminPage {
-  // height: 100%;
+.viewPage {
   width: 100%;
-  // overflow: auto;
   display: flex;
   flex-direction: column;
+  margin: 2rem 0 0;
+  align-items: center;
   gap: 0.8rem;
-  margin-bottom: 2.5rem;
-  .title {
-    margin-top: 1rem;
-    text-align: center;
-    color: appTheme.$mix-dark-300;
-  }
-  .description {
-    text-align: center;
-    color: appTheme.$mix-dark-100;
-  }
-  .emptyImage {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    .image {
-      width: 80%;
-      height: auto;
-    }
-    .imageText {
-      font-size: 1.2rem;
-      color: appTheme.$mix-dark-600;
-    }
-  }
   .reviewCard {
+    width: 90%;
     margin: 0.8rem 0.4rem;
     padding: 1rem;
     border-radius: 10px;
@@ -44,7 +18,7 @@
       padding-bottom: 0.4rem;
       margin-bottom: 0.4rem;
       border-bottom: 1px dashed #d0bde6;
-      color: appTheme.$mix-dark-300;
+      color: appTheme.$mix-dark-300;      
     }
     .carddescription {
       text-align: justify;
@@ -58,8 +32,10 @@
       align-items: center;
       justify-content: center;
       .reviewImage {
-        width: 35%;
-        height: auto;
+        max-height: 50%;
+        width: auto;
+        max-width: 90%;
+        margin: auto;
       }
     }
     .externalLink {
@@ -75,40 +51,43 @@
         text-decoration: underline;
       }
     }
-    .footerContainer {
-      display: flex;
-      justify-content: space-between;
+    .btnContainer{
+        border-top: 1px dashed #d0bde6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
     }
   }
 }
-
-.viewReviews {
-  .container {
+.viewReviews{
+  .container{
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    .messagesContainer {
+    .messagesContainer{
       margin: 0.8rem 0rem;
       padding: 1rem;
-      border-radius: 10px;
+      border-radius: 10px;      
       border: 1px solid #d0bde6;
       max-height: 45vh;
       overflow-y: auto;
-      .msg {
+      .msg{
         margin: 0 0 0.4rem;
         padding: 0.4rem 0.6rem;
-        border-radius: 8px;
+        border-radius: 8px;      
         border: 1px dashed #d0bde6;
-        .message {
+        .message{
           text-align: justify;
           margin-bottom: 0.5rem;
           color: appTheme.$mix-dark-100;
           font-weight: 600;
         }
-        .rating {
+        .rating{
           margin-bottom: 0.5rem;
         }
-        .footer {
+        .footer{
           border-top: 1px dashed #d0bde6;
           display: flex;
           align-items: center;
@@ -117,11 +96,22 @@
           margin-top: 0.3rem;
         }
       }
-      .loadmorecont {
+      .loadmorecont{
         display: flex;
         align-items: center;
         justify-content: center;
         margin-top: 0.5rem;
+      }
+    }
+    .userInput{
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      .btnContainer{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
       }
     }
   }
@@ -130,7 +120,7 @@
 // Two-column layout: Small tablets and up (≥ 433px)
 @container (min-width: 433px) and (max-width: 879px) {
   // styles for 2-column layout
-  .adminPage {
+  .viewPage {
     margin: auto;
     max-width: 70%;
   }
@@ -139,7 +129,7 @@
 // Desktop layout: (≥ 880px)
 @container (min-width: 880px) {
   // styles for wider screens
-  .adminPage {
+  .viewPage {
     margin: auto;
     max-width: 65%;
   }

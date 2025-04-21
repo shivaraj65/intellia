@@ -71,7 +71,7 @@ export const reviewsContractApi = {
       const testResults: any = await publicClient.simulateContract({
         address: contractAddress,
         abi: contractABI,
-        functionName: "createPoll",
+        functionName: "createReviewTopic",
         account: accounts[0],
         args: [topicId, title, description, imageURL, externalLink],
       });
@@ -192,7 +192,7 @@ export const reviewsContractApi = {
         address: contractAddress,
         abi: contractABI,
         functionName: "getTopicReview",
-        args: [topicId, index],
+        args: [topicId, BigInt(index)],
       });
       if (result && Array.isArray(result)) {
         const [a, b, c, d] = result as [string, string, number, string];
@@ -247,4 +247,3 @@ export const reviewsContractApi = {
     }
   },
 };
- 
