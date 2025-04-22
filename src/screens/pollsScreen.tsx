@@ -255,7 +255,7 @@ const PollsScreen = () => {
         pollIdNum &&
         pollIdNum > 0 &&
         userPollIds.length > 0 &&
-        pollIdNum < userPollIds.length
+        pollIdNum <= userPollIds.length
       ) {
         //fethc the specific pollData and set it to state
 
