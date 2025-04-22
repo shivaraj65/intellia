@@ -96,7 +96,7 @@ const HighlightScreen = () => {
           content: data,
         });
       } else {
-        setHighlightData([data]);
+        setHighlightData(data);
       }
     },
     createHighlights: async (
