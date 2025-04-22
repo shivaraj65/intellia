@@ -163,7 +163,7 @@ const AdminPage = ({
                   />
                   <div>
                     <span>
-                      ID: {reviewsData.length - index - 1}{" "}
+                      ID: {reviewsData.length - index }{" "}
                       <Button
                         shape="circle"
                         type="dashed"
