@@ -144,7 +144,7 @@ const PollsScreen = () => {
       const res = await blockchainFunctions.isUserVoted(pollId);
       if (pollIdNum) {
         const result: any = await blockchainFunctions.getPollData(
-          userPollIds[pollIdNum]
+          userPollIds[pollIdNum-1]
         );
         // Convert BigInt fields safely (like votes)
         const cleaned = {
