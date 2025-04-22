@@ -253,12 +253,14 @@ const PollsScreen = () => {
     (async () => {
       if (
         pollIdNum &&
+        pollIdNum > 0 &&
         userPollIds.length > 0 &&
         pollIdNum < userPollIds.length
       ) {
         //fethc the specific pollData and set it to state
+
         const result: any = await blockchainFunctions.getPollData(
-          userPollIds[pollIdNum]
+          userPollIds[pollIdNum -1]
         );
         // Convert BigInt fields safely (like votes)
         const cleaned = {

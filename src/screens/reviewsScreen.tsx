@@ -258,7 +258,7 @@ const ReviewScreen = () => {
     if (accounts[0] !== contextAccounts[0] && pollIdNum) {
       (async () => {
         const res = await blockchainFunctions.getHisReviewMetadata(
-          pollIdNum.toString()
+          (pollIdNum-1).toString()
         );
         setViewReviewData(res);
       })();

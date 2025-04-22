@@ -96,7 +96,7 @@ const HighlightScreen = () => {
           content: data,
         });
       } else {
-        setHighlightData(data);
+        setHighlightData([data]);
       }
     },
     createHighlights: async (
@@ -120,6 +120,7 @@ const HighlightScreen = () => {
       });
       await blockchainFunctions.checkTxnStatus(data);
       await blockchainFunctions.getHighlights();
+      setCurrentAdminScreen(0);
       setTxnLoading(false);
     },
     addMessage: async (message: string, icon: string) => {

@@ -99,7 +99,7 @@ const PollAdmin = ({ pollData = [], floatingButtonAction }: Props) => {
                     Total Votes <b>{getTotalVotes(poll.votes)}</b>
                   </p>
                   <span>
-                    {pollData.length - index}{" "}
+                    ID: {pollData.length - index}{" "}
                     <Button
                       shape="circle"
                       type="dashed"
