@@ -65,7 +65,7 @@ const AdminPage = ({ HighlightData, buttonAction }: Props) => {
             {HighlightData?.messages.length === 0 && (
               <div
                 style={{
-                  width: "100%",
+                  width: "90%",
                   minHeight: "200px",
                   display: "flex",
                   justifyContent: "center",
@@ -78,6 +78,7 @@ const AdminPage = ({ HighlightData, buttonAction }: Props) => {
                   backgroundColor: "#f9f9f9",
                   borderRadius: "12px",
                   boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)",
+                  margin:"auto",
                   marginTop: "2rem",
                 }}
               >
