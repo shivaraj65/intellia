@@ -17,7 +17,7 @@ With Intellia, users can enhance their Universal Everything profiles with intera
 ## 🔍 Sample Profile
 
 View a working profile using Intellia Widgets:  
-🧪 [universaleverything.io/0xA3f4...](https://universaleverything.io/0xA3f4d6098fcF44CD9273B5323f43be13C45966b7?network=testnet&assetGroup=grid)
+🧪 [https://universaleverything.io/0x0050...](https://universaleverything.io/0x005065663286A34C10b92e9aBF3154B6208C5A40?network=testnet&assetGroup=grid)
 
 Use this as a reference or copy widgets directly from it.
 
