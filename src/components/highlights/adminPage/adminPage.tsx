@@ -49,8 +49,7 @@ const AdminPage = ({ HighlightData, buttonAction }: Props) => {
                             </div>
                           );
                         }
-                      })}
-                      {message?.text}
+                      })}                      
                       <span className={styles.userCard}>
                         <Avatar
                           style={{ backgroundColor: "#8c64c8" }}
